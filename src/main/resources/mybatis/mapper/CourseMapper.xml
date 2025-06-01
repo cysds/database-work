@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cysds.dao.ICourseDao">
+    <resultMap id="BaseResultMap" type="com.cysds.dao.po.Course">
+        <id column="Cno" property="Cno"/>
+        <result column="Cname" property="Cname"/>
+        <result column="Cpno" property="Cpno"/>
+        <result column="Ccredit" property="Ccredit"/>
+    </resultMap>
+
+    <select id="queryAllCourse" resultMap="BaseResultMap">
+        SELECT * FROM course
+    </select>
+
+    <select id="queryCourseByCno" resultMap="BaseResultMap">
+        SELECT * FROM course WHERE Cno = #{Cno}
+    </select>
+
+    <update id="updateCourseByCno">
+        UPDATE course SET Cname = #{Cname}, Cpno = #{Cpno}, Ccredit = #{Ccredit} WHERE Cno = #{Cno}
+    </update>
+
+    <insert id="addCourse">
+        INSERT INTO course (Cno, Cname, Cpno, Ccredit) VALUES (#{Cno}, #{Cname}, #{Cpno}, #{Ccredit})
+    </insert>
+
+    <delete id="deleteCourseByCno">
+        DELETE FROM course WHERE Cno = #{Cno}
+    </delete>
+</mapper> 

@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>学生选课管理系统</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container { margin-top: 20px; }
+        .table { margin-top: 20px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>学生选课管理系统</h2>
+
+    <!-- 导航栏 -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="student-tab" data-bs-toggle="tab" href="#student" role="tab">学生管理</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="course-tab" data-bs-toggle="tab" href="#course" role="tab">课程管理</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="sc-tab" data-bs-toggle="tab" href="#sc" role="tab">选课管理</a>
+        </li>
+    </ul>
+
+    <!-- 内容区域 -->
+    <div class="tab-content" id="myTabContent">
+        <!-- 学生管理 -->
+        <div class="tab-pane fade show active" id="student" role="tabpanel">
+            <div class="row mt-3">
+                <div class="col">
+                    <button class="btn btn-primary" onclick="showAddStudentModal()">添加学生</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>学号</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>年龄</th>
+                        <th>院系</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="studentTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 课程管理 -->
+        <div class="tab-pane fade" id="course" role="tabpanel">
+            <div class="row mt-3">
+                <div class="col">
+                    <button class="btn btn-primary" onclick="showAddCourseModal()">添加课程</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>课程号</th>
+                        <th>课程名</th>
+                        <th>先修课程</th>
+                        <th>学分</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="courseTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 选课管理 -->
+        <div class="tab-pane fade" id="sc" role="tabpanel">
+            <div class="row mt-3">
+                <div class="col">
+                    <button class="btn btn-primary" onclick="showAddSCModal()">添加选课</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>学号</th>
+                        <th>课程号</th>
+                        <th>成绩</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="scTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加学生模态框 -->
+<div class="modal fade" id="addStudentModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">添加学生</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addStudentForm">
+                    <div class="mb-3">
+                        <label class="form-label">学号</label>
+                        <input type="text" class="form-control" name="sno" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">姓名</label>
+                        <input type="text" class="form-control" name="sname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">性别</label>
+                        <input type="text" class="form-control" name="sgender" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">年龄</label>
+                        <input type="number" class="form-control" name="sage" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">院系</label>
+                        <input type="text" class="form-control" name="sdept" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="addStudent()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加课程模态框 -->
+<div class="modal fade" id="addCourseModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">添加课程</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addCourseForm">
+                    <div class="mb-3">
+                        <label class="form-label">课程号</label>
+                        <input type="text" class="form-control" name="cno" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">课程名</label>
+                        <input type="text" class="form-control" name="cname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">先修课程</label>
+                        <input type="text" class="form-control" name="cpno">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">学分</label>
+                        <input type="number" class="form-control" name="ccredit" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="addCourse()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加选课模态框 -->
+<div class="modal fade" id="addSCModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">添加选课</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addSCForm">
+                    <div class="mb-3">
+                        <label class="form-label">学号</label>
+                        <input type="text" class="form-control" name="sno" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">课程号</label>
+                        <input type="text" class="form-control" name="cno" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">成绩</label>
+                        <input type="number" class="form-control" name="grade" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="addSC()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 选课模态框 -->
+<div class="modal fade" id="selectCourseModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">学生选课</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="studentSnoForSelectCourse">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>课程号</th>
+                                <th>课程名</th>
+                                <th>先修课程</th>
+                                <th>学分</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="availableCoursesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 退课模态框 -->
+<div class="modal fade" id="dropCourseModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">学生退课</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="studentSnoForDropCourse">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>课程号</th>
+                                <th>课程名</th>
+                                <th>成绩</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentCoursesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑学生信息模态框 -->
+<div class="modal fade" id="editStudentModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">编辑学生信息</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editStudentForm">
+                    <div class="mb-3">
+                        <label class="form-label">学号</label>
+                        <input type="text" class="form-control" name="sno" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">姓名</label>
+                        <input type="text" class="form-control" name="sname" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">性别</label>
+                        <input type="text" class="form-control" name="sgender" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">年龄</label>
+                        <input type="number" class="form-control" name="sage" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">院系</label>
+                        <input type="text" class="form-control" name="sdept" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="updateStudent()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑课程信息模态框 -->
+<div class="modal fade" id="editCourseModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">编辑课程信息</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editCourseForm">
+                    <div class="mb-3">
+                        <label class="form-label">课程号</label>
+                        <input type="text" class="form-control" name="cno" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">课程名</label>
+                        <input type="text" class="form-control" name="cname" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">先修课程</label>
+                        <input type="text" class="form-control" name="cpno" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">学分</label>
+                        <input type="number" class="form-control" name="ccredit" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="updateCourse()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑选课成绩模态框 -->
+<div class="modal fade" id="editSCModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">编辑选课成绩</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editSCForm">
+                    <div class="mb-3">
+                        <label class="form-label">学号</label>
+                        <input type="text" class="form-control" name="sno" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">课程号</label>
+                        <input type="text" class="form-control" name="cno" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">成绩</label>
+                        <input type="number" class="form-control" name="grade" required min="0" max="100">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="updateSC()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 删除学生确认模态框 -->
+<div class="modal fade" id="deleteStudentConfirmModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">确认删除学生</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>该学生存在以下选课记录，这些记录将被一并删除，是否确认？</p>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>课程号</th>
+                                <th>课程名称</th>
+                                <th>成绩</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentCoursesToDeleteTableBody"></tbody>
+                    </table>
+                </div>
+                <input type="hidden" id="studentSnoToDelete">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" onclick="executeDeleteStudent()">确认删除</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 删除课程确认模态框 -->
+<div class="modal fade" id="deleteCourseConfirmModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">确认删除课程</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>该课程存在以下选课记录，这些记录将被一并删除，是否确认？</p>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>学号</th>
+                                <th>姓名</th>
+                                <th>成绩</th>
+                            </tr>
+                        </thead>
+                        <tbody id="courseStudentsToDeleteTableBody"></tbody>
+                    </table>
+                </div>
+                <input type="hidden" id="courseCnoToDelete">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" onclick="executeDeleteCourse()">确认删除</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script>
+    const API_BASE_URL = 'http://localhost:8080/api';
+
+    let allStudents = []; // 存储所有学生信息
+
+    // 页面加载完成后执行
+    $(document).ready(function() {
+        loadStudents();
+        loadCourses();
+        loadSCs();
+    });
+
+    // 加载学生数据
+    function loadStudents() {
+        $.get(`${API_BASE_URL}/student`, function(data) {
+            const tbody = $('#studentTableBody');
+            tbody.empty();
+            allStudents = data; // 存储学生数据供后续使用
+            data.forEach(student => {
+                tbody.append(`
+                        <tr>
+                            <td>${student.sno}</td>
+                            <td>${student.sname}</td>
+                            <td>${student.sgender}</td>
+                            <td>${student.sage}</td>
+                            <td>${student.sdept}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" onclick="showEditStudentModal('${student.sno}')">编辑</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteStudent('${student.sno}')">删除</button>
+                                <button class="btn btn-sm btn-primary" onclick="showSelectCourseModal('${student.sno}')">选课</button>
+                                <button class="btn btn-sm btn-secondary" onclick="showDropCourseModal('${student.sno}')">退课</button>
+                            </td>
+                        </tr>
+                    `);
+            });
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.error('加载学生数据失败:', textStatus, errorThrown);
+            alert('加载学生数据失败，请检查后端服务是否正常运行');
+        });
+    }
+
+    // 加载课程数据
+    function loadCourses() {
+        $.get(`${API_BASE_URL}/course`, function(data) {
+            const tbody = $('#courseTableBody');
+            tbody.empty();
+            data.forEach(course => {
+                tbody.append(`
+                        <tr>
+                            <td>${course.cno}</td>
+                            <td>${course.cname}</td>
+                            <td>${course.cpno || ''}</td>
+                            <td>${course.ccredit}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" onclick="showEditCourseModal('${course.cno}')">编辑</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteCourse('${course.cno}')">删除</button>
+                            </td>
+                        </tr>
+                    `);
+            });
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.error('加载课程数据失败:', textStatus, errorThrown);
+            alert('加载课程数据失败，请检查后端服务是否正常运行');
+        });
+    }
+
+    // 加载选课数据
+    function loadSCs() {
+        $.get(`${API_BASE_URL}/sc`, function(data) {
+            const tbody = $('#scTableBody');
+            tbody.empty();
+            data.forEach(sc => {
+                tbody.append(`
+                        <tr>
+                            <td>${sc.sno}</td>
+                            <td>${sc.cno}</td>
+                            <td>${sc.grade}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" onclick="showEditSCModal('${sc.sno}', '${sc.cno}')">编辑</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteSC('${sc.sno}', '${sc.cno}')">删除</button>
+                            </td>
+                        </tr>
+                    `);
+            });
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.error('加载选课数据失败:', textStatus, errorThrown);
+            alert('加载选课数据失败，请检查后端服务是否正常运行');
+        });
+    }
+
+    // 显示添加学生模态框
+    function showAddStudentModal() {
+        $('#addStudentForm')[0].reset();
+        new bootstrap.Modal(document.getElementById('addStudentModal')).show();
+    }
+
+    // 显示添加课程模态框
+    function showAddCourseModal() {
+        $('#addCourseForm')[0].reset();
+        new bootstrap.Modal(document.getElementById('addCourseModal')).show();
+    }
+
+    // 显示添加选课模态框
+    function showAddSCModal() {
+        $('#addSCForm')[0].reset();
+        new bootstrap.Modal(document.getElementById('addSCModal')).show();
+    }
+
+    // 添加学生
+    function addStudent() {
+        const formData = {
+            sno: $('#addStudentForm [name="sno"]').val(),
+            sname: $('#addStudentForm [name="sname"]').val(),
+            sgender: $('#addStudentForm [name="sgender"]').val(),
+            sage: parseInt($('#addStudentForm [name="sage"]').val()),
+            sdept: $('#addStudentForm [name="sdept"]').val()
+        };
+
+        $.ajax({
+            url: `${API_BASE_URL}/student`,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function() {
+                $('#addStudentModal').modal('hide');
+                loadStudents();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('添加学生失败：' + errorThrown);
+            }
+        });
+    }
+
+    // 显示选课模态框
+    function showSelectCourseModal(sno) {
+        $('#studentSnoForSelectCourse').val(sno);
+        
+        // 获取学生已选课程
+        $.get(`${API_BASE_URL}/sc/student/${sno}`, function(selectedCourses) {
+            const selectedCourseIds = selectedCourses.map(sc => sc.cno);
+            
+            // 获取所有课程
+            $.get(`${API_BASE_URL}/course`, function(allCourses) {
+                // 筛选可选课程（未选 + 满足先修课程要求）
+                const availableCourses = allCourses.filter(course => {
+                    // 检查是否已选
+                    if (selectedCourseIds.includes(course.cno)) {
+                        return false;
+                    }
+                    
+                    // 检查先修课程
+                    if (!course.cpno) {
+                        return true; // 无先修课程要求
+                    }
+                    
+                    // 检查是否完成了先修课程
+                    const prerequisiteCourse = selectedCourses.find(sc => sc.cno === course.cpno);
+                    return prerequisiteCourse && prerequisiteCourse.grade >= 60; // 成绩及格才算完成
+                });
+                
+                // 显示可选课程
+                const tbody = $('#availableCoursesTableBody');
+                tbody.empty();
+                
+                if (availableCourses.length === 0) {
+                    tbody.append('<tr><td colspan="5" class="text-center">没有可选课程</td></tr>');
+                } else {
+                    availableCourses.forEach(course => {
+                        tbody.append(`
+                            <tr>
+                                <td>${course.cno}</td>
+                                <td>${course.cname}</td>
+                                <td>${course.cpno || '无'}</td>
+                                <td>${course.ccredit}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-success" onclick="selectCourse('${sno}', '${course.cno}')">选择</button>
+                                </td>
+                            </tr>
+                        `);
+                    });
+                }
+                
+                // 显示模态框
+                new bootstrap.Modal(document.getElementById('selectCourseModal')).show();
+            });
+        });
+    }
+    
+    // 选课
+    function selectCourse(sno, cno) {
+        const formData = {
+            sno: sno,
+            cno: cno,
+            grade: 0 // 默认成绩为0
+        };
+        
+        $.ajax({
+            url: `${API_BASE_URL}/sc`,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function() {
+                alert('选课成功！');
+                bootstrap.Modal.getInstance(document.getElementById('selectCourseModal')).hide();
+                loadSCs();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('选课失败：' + errorThrown);
+            }
+        });
+    }
+    
+    // 显示退课模态框
+    function showDropCourseModal(sno) {
+        $('#studentSnoForDropCourse').val(sno);
+        
+        // 获取学生已选课程
+        $.get(`${API_BASE_URL}/sc/student/${sno}`, function(selectedCourses) {
+            // 获取课程详情
+            $.get(`${API_BASE_URL}/course`, function(allCourses) {
+                // 合并选课信息和课程详情
+                const studentCourses = selectedCourses.map(sc => {
+                    const courseInfo = allCourses.find(c => c.cno === sc.cno) || {};
+                    return {
+                        ...sc,
+                        cname: courseInfo.cname || '未知课程'
+                    };
+                });
+                
+                // 显示学生的课程
+                const tbody = $('#studentCoursesTableBody');
+                tbody.empty();
+                
+                if (studentCourses.length === 0) {
+                    tbody.append('<tr><td colspan="4" class="text-center">没有选课记录</td></tr>');
+                } else {
+                    studentCourses.forEach(course => {
+                        tbody.append(`
+                            <tr>
+                                <td>${course.cno}</td>
+                                <td>${course.cname}</td>
+                                <td>${course.grade}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-danger" onclick="dropCourse('${sno}', '${course.cno}')">退课</button>
+                                </td>
+                            </tr>
+                        `);
+                    });
+                }
+                
+                // 显示模态框
+                new bootstrap.Modal(document.getElementById('dropCourseModal')).show();
+            });
+        });
+    }
+    
+    // 退课
+    function dropCourse(sno, cno) {
+        if (confirm('确定要退选该课程吗？')) {
+            $.ajax({
+                url: `${API_BASE_URL}/sc/${sno}/${cno}`,
+                type: 'DELETE',
+                success: function() {
+                    // 先关闭当前模态框
+                    const modalElement = document.getElementById('dropCourseModal');
+                    const modal = bootstrap.Modal.getInstance(modalElement);
+                    if (modal) {
+                        modal.hide();
+                    }
+                    
+                    alert('退课成功！');
+                    loadSCs(); // 重新加载选课数据
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('退课失败：' + errorThrown);
+                }
+            });
+        }
+    }
+    
+    // 显示编辑学生模态框
+    function showEditStudentModal(sno) {
+        console.log("显示编辑学生模态框, 学号:", sno);
+        
+        // 从已加载的学生数据中查找
+        const student = allStudents.find(student => student.sno === sno);
+        
+        if (student) {
+            $('#editStudentForm [name="sno"]').val(student.sno);
+            $('#editStudentForm [name="sname"]').val(student.sname);
+            $('#editStudentForm [name="sgender"]').val(student.sgender);
+            $('#editStudentForm [name="sage"]').val(student.sage);
+            $('#editStudentForm [name="sdept"]').val(student.sdept);
+            
+            // 显示模态框
+            const modalElement = document.getElementById('editStudentModal');
+            if (modalElement) {
+                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+            } else {
+                console.error("找不到编辑学生模态框元素");
+                alert("系统错误：找不到编辑学生模态框");
+            }
+        } else {
+            console.error("找不到学号为", sno, "的学生信息");
+            alert("找不到该学生信息，请刷新页面后重试");
+        }
+    }
+    
+    // 更新学生信息
+    function updateStudent() {
+        const formData = {
+            sno: $('#editStudentForm [name="sno"]').val(),
+            sname: $('#editStudentForm [name="sname"]').val(),
+            sgender: $('#editStudentForm [name="sgender"]').val(),
+            sage: parseInt($('#editStudentForm [name="sage"]').val()),
+            sdept: $('#editStudentForm [name="sdept"]').val()
+        };
+        
+        console.log("更新学生信息:", formData);
+        
+        $.ajax({
+            url: `${API_BASE_URL}/student/${formData.sno}`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function() {
+                alert('更新成功！');
+                bootstrap.Modal.getInstance(document.getElementById('editStudentModal')).hide();
+                loadStudents();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error("更新学生信息失败:", jqXHR.status, textStatus, errorThrown, jqXHR.responseText);
+                alert('更新学生信息失败：' + (jqXHR.responseText || errorThrown));
+            }
+        });
+    }
+    
+    // 显示编辑课程模态框
+    function showEditCourseModal(cno) {
+        $.get(`${API_BASE_URL}/course/${cno}`, function(course) {
+            $('#editCourseForm [name="cno"]').val(course.cno);
+            $('#editCourseForm [name="cname"]').val(course.cname);
+            $('#editCourseForm [name="cpno"]').val(course.cpno || '');
+            $('#editCourseForm [name="ccredit"]').val(course.ccredit);
+            new bootstrap.Modal(document.getElementById('editCourseModal')).show();
+        });
+    }
+    
+    // 更新课程信息
+    function updateCourse() {
+        const formData = {
+            cno: $('#editCourseForm [name="cno"]').val(),
+            cname: $('#editCourseForm [name="cname"]').val(),
+            cpno: $('#editCourseForm [name="cpno"]').val() || null,
+            ccredit: parseInt($('#editCourseForm [name="ccredit"]').val())
+        };
+        
+        $.ajax({
+            url: `${API_BASE_URL}/course/${formData.cno}`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function() {
+                alert('更新成功！');
+                bootstrap.Modal.getInstance(document.getElementById('editCourseModal')).hide();
+                loadCourses();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('更新课程信息失败：' + errorThrown);
+            }
+        });
+    }
+    
+    // 显示编辑选课成绩模态框
+    function showEditSCModal(sno, cno) {
+        $.get(`${API_BASE_URL}/sc/student/${sno}`, function(scList) {
+            const sc = scList.find(item => item.cno === cno);
+            if (sc) {
+                $('#editSCForm [name="sno"]').val(sc.sno);
+                $('#editSCForm [name="cno"]').val(sc.cno);
+                $('#editSCForm [name="grade"]').val(sc.grade);
+                new bootstrap.Modal(document.getElementById('editSCModal')).show();
+            } else {
+                alert('未找到选课记录');
+            }
+        });
+    }
+    
+    // 更新选课成绩
+    function updateSC() {
+        const formData = {
+            sno: $('#editSCForm [name="sno"]').val(),
+            cno: $('#editSCForm [name="cno"]').val(),
+            grade: parseInt($('#editSCForm [name="grade"]').val())
+        };
+        
+        $.ajax({
+            url: `${API_BASE_URL}/sc`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function() {
+                alert('更新成功！');
+                bootstrap.Modal.getInstance(document.getElementById('editSCModal')).hide();
+                loadSCs();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('更新选课成绩失败：' + errorThrown);
+            }
+        });
+    }
+
+    // 添加课程
+    function addCourse() {
+        const formData = {
+            cno: $('#addCourseForm [name="cno"]').val(),
+            cname: $('#addCourseForm [name="cname"]').val(),
+            cpno: $('#addCourseForm [name="cpno"]').val() || null,
+            ccredit: parseInt($('#addCourseForm [name="ccredit"]').val())
+        };
+
+        $.ajax({
+            url: `${API_BASE_URL}/course`,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function() {
+                alert('添加课程成功！');
+                bootstrap.Modal.getInstance(document.getElementById('addCourseModal')).hide();
+                loadCourses();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('添加课程失败：' + errorThrown);
+            }
+        });
+    }
+    
+    // 添加选课
+    function addSC() {
+        const formData = {
+            sno: $('#addSCForm [name="sno"]').val(),
+            cno: $('#addSCForm [name="cno"]').val(),
+            grade: parseInt($('#addSCForm [name="grade"]').val())
+        };
+
+        $.ajax({
+            url: `${API_BASE_URL}/sc`,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function() {
+                alert('添加选课成功！');
+                bootstrap.Modal.getInstance(document.getElementById('addSCModal')).hide();
+                loadSCs();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('添加选课失败：' + errorThrown);
+            }
+        });
+    }
+
+    // 删除学生
+    function deleteStudent(sno) {
+        // 先查询该学生的选课记录
+        $.get(`${API_BASE_URL}/sc/student/${sno}`, function(data) {
+            if (data && data.length > 0) {
+                // 获取课程详情
+                $.get(`${API_BASE_URL}/course`, function(allCourses) {
+                    // 合并选课信息和课程详情
+                    const studentCourses = data.map(sc => {
+                        const courseInfo = allCourses.find(c => c.cno === sc.cno) || {};
+                        return {
+                            ...sc,
+                            cname: courseInfo.cname || '未知课程'
+                        };
+                    });
+                    
+                    // 显示学生的课程
+                    const tbody = $('#studentCoursesToDeleteTableBody');
+                    tbody.empty();
+                    
+                    studentCourses.forEach(course => {
+                        tbody.append(`
+                            <tr>
+                                <td>${course.cno}</td>
+                                <td>${course.cname}</td>
+                                <td>${course.grade}</td>
+                            </tr>
+                        `);
+                    });
+                    
+                    // 保存要删除的学生学号
+                    $('#studentSnoToDelete').val(sno);
+                    
+                    // 显示模态框
+                    new bootstrap.Modal(document.getElementById('deleteStudentConfirmModal')).show();
+                });
+            } else {
+                // 无选课记录，直接确认是否删除
+                if(confirm('确定要删除这个学生吗？')) {
+                    executeDeleteStudent(sno);
+                }
+            }
+        }).fail(function() {
+            // 查询失败，直接询问是否删除
+            if(confirm('确定要删除这个学生吗？')) {
+                executeDeleteStudent(sno);
+            }
+        });
+    }
+    
+    // 执行删除学生操作
+    function executeDeleteStudent(sno) {
+        // 如果没有传入sno参数，从隐藏字段获取
+        if (!sno) {
+            sno = $('#studentSnoToDelete').val();
+        }
+        
+        // 先删除该学生的所有选课记录
+        $.ajax({
+            url: `${API_BASE_URL}/sc/student/${sno}`,
+            type: 'DELETE',
+            success: function() {
+                // 然后删除学生
+                $.ajax({
+                    url: `${API_BASE_URL}/student/${sno}`,
+                    type: 'DELETE',
+                    success: function() {
+                        // 如果模态框是打开的，关闭它
+                        const modalElement = document.getElementById('deleteStudentConfirmModal');
+                        const modal = bootstrap.Modal.getInstance(modalElement);
+                        if (modal) {
+                            modal.hide();
+                        }
+                        loadStudents();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('删除学生失败:', textStatus, errorThrown);
+                        alert('删除学生失败，请稍后重试');
+                    }
+                });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('删除学生选课记录失败:', textStatus, errorThrown);
+                alert('删除学生选课记录失败，请稍后重试');
+            }
+        });
+    }
+
+    // 删除课程
+    function deleteCourse(cno) {
+        // 先查询该课程的选课记录
+        $.get(`${API_BASE_URL}/sc/course/${cno}`, function(data) {
+            if (data && data.length > 0) {
+                // 获取学生详情
+                $.get(`${API_BASE_URL}/student`, function(allStudents) {
+                    // 合并选课信息和学生详情
+                    const courseStudents = data.map(sc => {
+                        const studentInfo = allStudents.find(s => s.sno === sc.sno) || {};
+                        return {
+                            ...sc,
+                            sname: studentInfo.sname || '未知学生'
+                        };
+                    });
+                    
+                    // 显示选修该课程的学生
+                    const tbody = $('#courseStudentsToDeleteTableBody');
+                    tbody.empty();
+                    
+                    courseStudents.forEach(student => {
+                        tbody.append(`
+                            <tr>
+                                <td>${student.sno}</td>
+                                <td>${student.sname}</td>
+                                <td>${student.grade}</td>
+                            </tr>
+                        `);
+                    });
+                    
+                    // 保存要删除的课程号
+                    $('#courseCnoToDelete').val(cno);
+                    
+                    // 显示模态框
+                    new bootstrap.Modal(document.getElementById('deleteCourseConfirmModal')).show();
+                });
+            } else {
+                // 无选课记录，直接确认是否删除
+                if(confirm('确定要删除这个课程吗？')) {
+                    executeDeleteCourse(cno);
+                }
+            }
+        }).fail(function() {
+            // 查询失败，直接询问是否删除
+            if(confirm('确定要删除这个课程吗？')) {
+                executeDeleteCourse(cno);
+            }
+        });
+    }
+    
+    // 执行删除课程操作
+    function executeDeleteCourse(cno) {
+        // 如果没有传入cno参数，从隐藏字段获取
+        if (!cno) {
+            cno = $('#courseCnoToDelete').val();
+        }
+        
+        // 先删除该课程的所有选课记录
+        $.ajax({
+            url: `${API_BASE_URL}/sc/course/${cno}`,
+            type: 'DELETE',
+            success: function() {
+                // 然后删除课程
+                $.ajax({
+                    url: `${API_BASE_URL}/course/${cno}`,
+                    type: 'DELETE',
+                    success: function() {
+                        // 如果模态框是打开的，关闭它
+                        const modalElement = document.getElementById('deleteCourseConfirmModal');
+                        const modal = bootstrap.Modal.getInstance(modalElement);
+                        if (modal) {
+                            modal.hide();
+                        }
+                        loadCourses();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('删除课程失败:', textStatus, errorThrown);
+                        alert('删除课程失败，请稍后重试');
+                    }
+                });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('删除课程选课记录失败:', textStatus, errorThrown);
+                alert('删除课程选课记录失败，请稍后重试');
+            }
+        });
+    }
+
+    // 删除选课
+    function deleteSC(sno, cno) {
+        if (confirm('确定要删除这个选课记录吗？')) {
+            $.ajax({
+                url: `${API_BASE_URL}/sc/${sno}/${cno}`,
+                type: 'DELETE',
+                success: function() {
+                    alert('删除选课记录成功！');
+                    loadSCs();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('删除选课记录失败:', textStatus, errorThrown);
+                    alert('删除选课记录失败，请稍后重试');
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html> 

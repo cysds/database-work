@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cysds.dao.IStudentDao">
+    <resultMap id="BaseResultMap" type="com.cysds.dao.po.Student">
+        <id column="Sno" property="Sno"/>
+        <result column="Sname" property="Sname"/>
+        <result column="Sgender" property="Sgender"/>
+        <result column="Sage" property="Sage"/>
+        <result column="Sdept" property="Sdept"/>
+    </resultMap>
+
+    <select id="queryAllStudent" resultMap="BaseResultMap">
+        SELECT * FROM student
+    </select>
+
+    <select id="queryStudentBySno" resultMap="BaseResultMap">
+        SELECT * FROM student WHERE Sno = #{Sno}
+    </select>
+
+    <update id="updateStudentBySno">
+        UPDATE student SET Sname = #{Sname}, Sgender = #{Sgender}, Sage = #{Sage}, Sdept = #{Sdept} WHERE Sno = #{Sno}
+    </update>
+
+    <insert id="addStudent">
+        INSERT INTO student (Sno, Sname, Sgender, Sage, Sdept) VALUES (#{Sno}, #{Sname}, #{Sgender}, #{Sage}, #{Sdept})
+    </insert>
+
+    <delete id="deleteStudentBySno">
+        DELETE FROM student WHERE Sno = #{Sno}
+    </delete>
+</mapper> 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cysds.dao.ISCDao">
+    <resultMap id="BaseResultMap" type="com.cysds.dao.po.SC">
+        <id column="Sno" property="Sno"/>
+        <id column="Cno" property="Cno"/>
+        <result column="Grade" property="Grade"/>
+    </resultMap>
+
+    <select id="queryAllSC" resultMap="BaseResultMap">
+        SELECT * FROM sc
+    </select>
+
+    <select id="querySCBySno" resultMap="BaseResultMap">
+        SELECT * FROM sc WHERE Sno = #{Sno}
+    </select>
+    
+    <select id="querySCByCno" resultMap="BaseResultMap">
+        SELECT * FROM sc WHERE Cno = #{Cno}
+    </select>
+
+    <update id="updateSC">
+        UPDATE sc SET Grade = #{Grade} WHERE Sno = #{Sno} AND Cno = #{Cno}
+    </update>
+
+    <insert id="addSC">
+        INSERT INTO sc (Sno, Cno, Grade) VALUES (#{Sno}, #{Cno}, #{Grade})
+    </insert>
+
+    <delete id="deleteSC">
+        DELETE FROM sc WHERE Sno = #{sNo} AND Cno = #{cNo}
+    </delete>
+    
+    <delete id="deleteSCBySno">
+        DELETE FROM sc WHERE Sno = #{Sno}
+    </delete>
+    
+    <delete id="deleteSCByCno">
+        DELETE FROM sc WHERE Cno = #{Cno}
+    </delete>
+</mapper> 
