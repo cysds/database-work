@@ -2,6 +2,7 @@ package com.cysds.controller;
 
 import com.cysds.dao.ICourseDao;
 import com.cysds.dao.po.Course;
+import com.cysds.dao.po.CourseWithStudentCount;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -23,6 +24,16 @@ public class CourseController {
     @GetMapping("/{cno}")
     public Course getByCno(@PathVariable String cno) {
         return courseDao.queryCourseByCno(cno);
+    }
+
+    @GetMapping("/with-student-count")
+    public List<CourseWithStudentCount> getAllWithStudentCount() {
+        return courseDao.queryAllCourseWithStudentCount();
+    }
+
+    @GetMapping("/with-student-count/{cno}")
+    public CourseWithStudentCount getWithStudentCountByCno(@PathVariable String cno) {
+        return courseDao.queryCourseWithStudentCountByCno(cno);
     }
 
     @PostMapping

@@ -2,342 +2,11 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>学生选课管理系统 - 炫酷版</title>
+    <title>学生选课管理系统</title>
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #6c5ce7; /* A modern purple */
-            --secondary-color: #fd79a8; /* A soft pink */
-            --accent-color: #00cec9; /* A vibrant teal */
-            --background-start: #2c3e50;
-            --background-end: #3498db;
-            --text-color: #ecf0f1;
-            --card-background: rgba(255, 255, 255, 0.05);
-            --border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--background-start), var(--background-end));
-            background-attachment: fixed;
-            color: var(--text-color);
-            padding-top: 20px;
-            padding-bottom: 20px;
-            overflow-x: hidden; /* Prevent horizontal scroll from decorative elements */
-        }
-
-        /* Decorative background elements */
-        body::before, body::after {
-            content: '';
-            position: fixed;
-            border-radius: 50%;
-            opacity: 0.15;
-            z-index: -1;
-            animation: pulseBubble 15s infinite ease-in-out;
-        }
-
-        body::before {
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, var(--primary-color), transparent 60%);
-            top: 5%;
-            left: -50px;
-        }
-
-        body::after {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, var(--accent-color), transparent 70%);
-            bottom: 5%;
-            right: -80px;
-            animation-delay: -7.5s;
-        }
-
-        @keyframes pulseBubble {
-            0%, 100% { transform: scale(0.9) rotate(0deg); opacity: 0.1; }
-            50% { transform: scale(1.1) rotate(10deg); opacity: 0.2; }
-        }
-
-        .container {
-            background-color: var(--card-background);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-color);
-            margin-top: 20px;
-            position: relative; /* For potential pseudo-elements */
-            overflow: hidden; /* Clip overflowing decorative elements */
-        }
-
-        /* Add a subtle animated border to the container */
-        .container::before {
-            content: "";
-            position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
-            z-index: -1;
-            margin: -2px; /* Adjust to border thickness */
-            border-radius: inherit; /* Follow container's border-radius */
-            background: linear-gradient(to right, var(--primary-color), var(--accent-color), var(--secondary-color));
-            animation: animatedBorder 5s linear infinite;
-            background-size: 200% 200%;
-        }
-
-        @keyframes animatedBorder {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-
-        h2 {
-            color: var(--text-color);
-            text-align: center;
-            margin-bottom: 30px;
-            font-weight: 300;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
-            animation: fadeInDown 1s ease-out;
-        }
-
-        .nav-tabs {
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 20px;
-        }
-
-        .nav-tabs .nav-link {
-            color: rgba(255, 255, 255, 0.7);
-            border: none;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
-            padding: 10px 20px;
-            font-weight: 500;
-        }
-
-        .nav-tabs .nav-link:hover {
-            color: var(--text-color);
-            border-bottom-color: var(--accent-color);
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-tabs .nav-link.active {
-            color: var(--text-color);
-            background-color: transparent; /* Keep it clean */
-            border-bottom: 3px solid var(--primary-color);
-            font-weight: 700;
-        }
-
-        .btn {
-            border-radius: 25px; /* Pill shape */
-            padding: 10px 20px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        .btn-primary:hover {
-            background-color: color-mix(in srgb, var(--primary-color) 80%, black);
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 6px 20px color-mix(in srgb, var(--primary-color) 50%, transparent);
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-        .btn-secondary:hover {
-            background-color: color-mix(in srgb, var(--secondary-color) 80%, black);
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 6px 20px color-mix(in srgb, var(--secondary-color) 50%, transparent);
-        }
-
-        .btn-warning {
-            background-color: #f39c12; /* Bootstrap orange */
-            color: white;
-        }
-        .btn-warning:hover {
-            background-color: #e67e22;
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
-        }
-
-        .btn-danger {
-            background-color: #e74c3c; /* Bootstrap red */
-            color: white;
-        }
-        .btn-danger:hover {
-            background-color: #c0392b;
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
-        }
-
-        .btn-success {
-            background-color: var(--accent-color);
-            color: white;
-        }
-        .btn-success:hover {
-            background-color: color-mix(in srgb, var(--accent-color) 80%, black);
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 6px 20px color-mix(in srgb, var(--accent-color) 50%, transparent);
-        }
-
-
-        .table {
-            background-color: rgba(255, 255, 255, 0.08);
-            border-radius: 8px;
-            overflow: hidden; /* For rounded corners on table */
-            color: var(--text-color);
-            margin-top: 20px;
-            border: 1px solid var(--border-color);
-        }
-
-        .table th, .table td {
-            border-color: var(--border-color) !important; /* Override Bootstrap */
-            vertical-align: middle;
-        }
-
-        .table thead th {
-            background-color: rgba(0,0,0,0.2);
-            color: var(--text-color);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .table tbody tr {
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            animation: fadeInRow 0.5s ease-out forwards;
-            opacity: 0;
-        }
-
-        .table tbody tr:nth-child(odd) {
-            background-color: rgba(255,255,255,0.03);
-        }
-        .table tbody tr:nth-child(even) {
-            background-color: rgba(255,255,255,0.06);
-        }
-
-        .table tbody tr:hover {
-            background-color: rgba(var(--primary-color-rgb), 0.3); /* Use RGB for opacity */
-            transform: scale(1.01);
-            box-shadow: 0 0 15px rgba(var(--primary-color-rgb), 0.5);
-            z-index: 1;
-            position: relative;
-        }
-
-        /* Staggered animation for table rows */
-        .table tbody tr:nth-child(1) { animation-delay: 0.05s; }
-        .table tbody tr:nth-child(2) { animation-delay: 0.1s; }
-        .table tbody tr:nth-child(3) { animation-delay: 0.15s; }
-        .table tbody tr:nth-child(4) { animation-delay: 0.2s; }
-        .table tbody tr:nth-child(5) { animation-delay: 0.25s; }
-        /* Add more if needed or handle dynamically with JS if tables are very long */
-
-
-        .modal-content {
-            background-color: #2c3e50; /* Darker background for modals */
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            color: var(--text-color);
-            animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .modal-header {
-            border-bottom: 1px solid var(--border-color);
-        }
-        .modal-header .btn-close {
-            filter: invert(1) grayscale(100%) brightness(200%); /* Make close button white */
-        }
-
-        .modal-title {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        .modal-footer {
-            border-top: 1px solid var(--border-color);
-        }
-
-        .form-label {
-            color: var(--accent-color);
-            font-weight: 500;
-        }
-
-        .form-control {
-            background-color: rgba(255,255,255,0.1);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            border-radius: 8px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .form-control:focus {
-            background-color: rgba(255,255,255,0.15);
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--primary-color) 30%, transparent);
-            color: var(--text-color);
-        }
-        .form-control::placeholder {
-            color: rgba(255,255,255,0.5);
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInRow {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes zoomIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* Tab content animation */
-        .tab-pane.fade {
-            transition: opacity .3s linear;
-        }
-        .tab-pane.active.show {
-            animation: tabFadeIn 0.5s ease-out;
-        }
-        @keyframes tabFadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* For color-mix to work with primary-color in table hover */
-        :root {
-            --primary-color-rgb: 108, 92, 231; /* RGB for var(--primary-color) */
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .btn {
-                padding: 8px 15px;
-                font-size: 0.9rem;
-            }
-            h2 {
-                font-size: 1.8rem;
-            }
-            .container {
-                padding: 20px;
-            }
-            body::before, body::after {
-                width: 200px;
-                height: 200px;
-            }
-        }
+        .container { margin-top: 20px; }
+        .table { margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -346,28 +15,28 @@
 
     <!-- 导航栏 -->
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="student-tab" data-bs-toggle="tab" data-bs-target="#student" type="button" role="tab" aria-controls="student" aria-selected="true">学生管理</button>
+        <li class="nav-item">
+            <a class="nav-link active" id="student-tab" data-bs-toggle="tab" href="#student" role="tab">学生管理</a>
         </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="course-tab" data-bs-toggle="tab" data-bs-target="#course" type="button" role="tab" aria-controls="course" aria-selected="false">课程管理</button>
+        <li class="nav-item">
+            <a class="nav-link" id="course-tab" data-bs-toggle="tab" href="#course" role="tab">课程管理</a>
         </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="sc-tab" data-bs-toggle="tab" data-bs-target="#sc" type="button" role="tab" aria-controls="sc" aria-selected="false">选课管理</button>
+        <li class="nav-item">
+            <a class="nav-link" id="sc-tab" data-bs-toggle="tab" href="#sc" role="tab">选课管理</a>
         </li>
     </ul>
 
     <!-- 内容区域 -->
     <div class="tab-content" id="myTabContent">
         <!-- 学生管理 -->
-        <div class="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab">
-            <div class="row mt-3 mb-3">
+        <div class="tab-pane fade show active" id="student" role="tabpanel">
+            <div class="row mt-3">
                 <div class="col">
                     <button class="btn btn-primary" onclick="showAddStudentModal()">添加学生</button>
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th>学号</th>
@@ -384,14 +53,14 @@
         </div>
 
         <!-- 课程管理 -->
-        <div class="tab-pane fade" id="course" role="tabpanel" aria-labelledby="course-tab">
-            <div class="row mt-3 mb-3">
+        <div class="tab-pane fade" id="course" role="tabpanel">
+            <div class="row mt-3">
                 <div class="col">
                     <button class="btn btn-primary" onclick="showAddCourseModal()">添加课程</button>
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th>课程号</th>
@@ -407,14 +76,14 @@
         </div>
 
         <!-- 选课管理 -->
-        <div class="tab-pane fade" id="sc" role="tabpanel" aria-labelledby="sc-tab">
-            <div class="row mt-3 mb-3">
+        <div class="tab-pane fade" id="sc" role="tabpanel">
+            <div class="row mt-3">
                 <div class="col">
                     <button class="btn btn-primary" onclick="showAddSCModal()">添加选课</button>
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th>学号</th>
@@ -431,34 +100,34 @@
 </div>
 
 <!-- 添加学生模态框 -->
-<div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="addStudentModal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addStudentModalLabel">添加学生</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title">添加学生</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <form id="addStudentForm">
                     <div class="mb-3">
-                        <label for="snoAdd" class="form-label">学号</label>
-                        <input type="text" class="form-control" id="snoAdd" name="sno" required>
+                        <label class="form-label">学号</label>
+                        <input type="text" class="form-control" name="sno" required>
                     </div>
                     <div class="mb-3">
-                        <label for="snameAdd" class="form-label">姓名</label>
-                        <input type="text" class="form-control" id="snameAdd" name="sname" required>
+                        <label class="form-label">姓名</label>
+                        <input type="text" class="form-control" name="sname" required>
                     </div>
                     <div class="mb-3">
-                        <label for="sgenderAdd" class="form-label">性别</label>
-                        <input type="text" class="form-control" id="sgenderAdd" name="sgender" required>
+                        <label class="form-label">性别</label>
+                        <input type="text" class="form-control" name="sgender" required>
                     </div>
                     <div class="mb-3">
-                        <label for="sageAdd" class="form-label">年龄</label>
-                        <input type="number" class="form-control" id="sageAdd" name="sage" required>
+                        <label class="form-label">年龄</label>
+                        <input type="number" class="form-control" name="sage" required>
                     </div>
                     <div class="mb-3">
-                        <label for="sdeptAdd" class="form-label">院系</label>
-                        <input type="text" class="form-control" id="sdeptAdd" name="sdept" required>
+                        <label class="form-label">院系</label>
+                        <input type="text" class="form-control" name="sdept" required>
                     </div>
                 </form>
             </div>
@@ -471,30 +140,30 @@
 </div>
 
 <!-- 添加课程模态框 -->
-<div class="modal fade" id="addCourseModal" tabindex="-1" aria-labelledby="addCourseModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="addCourseModal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addCourseModalLabel">添加课程</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title">添加课程</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <form id="addCourseForm">
                     <div class="mb-3">
-                        <label for="cnoAdd" class="form-label">课程号</label>
-                        <input type="text" class="form-control" id="cnoAdd" name="cno" required>
+                        <label class="form-label">课程号</label>
+                        <input type="text" class="form-control" name="cno" required>
                     </div>
                     <div class="mb-3">
-                        <label for="cnameAdd" class="form-label">课程名</label>
-                        <input type="text" class="form-control" id="cnameAdd" name="cname" required>
+                        <label class="form-label">课程名</label>
+                        <input type="text" class="form-control" name="cname" required>
                     </div>
                     <div class="mb-3">
-                        <label for="cpnoAdd" class="form-label">先修课程</label>
-                        <input type="text" class="form-control" id="cpnoAdd" name="cpno">
+                        <label class="form-label">先修课程</label>
+                        <input type="text" class="form-control" name="cpno">
                     </div>
                     <div class="mb-3">
-                        <label for="ccreditAdd" class="form-label">学分</label>
-                        <input type="number" class="form-control" id="ccreditAdd" name="ccredit" required>
+                        <label class="form-label">学分</label>
+                        <input type="number" class="form-control" name="ccredit" required>
                     </div>
                 </form>
             </div>
@@ -507,26 +176,26 @@
 </div>
 
 <!-- 添加选课模态框 -->
-<div class="modal fade" id="addSCModal" tabindex="-1" aria-labelledby="addSCModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="addSCModal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addSCModalLabel">添加选课</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title">添加选课</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <form id="addSCForm">
                     <div class="mb-3">
-                        <label for="snoScAdd" class="form-label">学号</label>
-                        <input type="text" class="form-control" id="snoScAdd" name="sno" required>
+                        <label class="form-label">学号</label>
+                        <input type="text" class="form-control" name="sno" required>
                     </div>
                     <div class="mb-3">
-                        <label for="cnoScAdd" class="form-label">课程号</label>
-                        <input type="text" class="form-control" id="cnoScAdd" name="cno" required>
+                        <label class="form-label">课程号</label>
+                        <input type="text" class="form-control" name="cno" required>
                     </div>
                     <div class="mb-3">
-                        <label for="gradeScAdd" class="form-label">成绩</label>
-                        <input type="number" class="form-control" id="gradeScAdd" name="grade" required>
+                        <label class="form-label">成绩</label>
+                        <input type="number" class="form-control" name="grade" required>
                     </div>
                 </form>
             </div>
@@ -539,17 +208,17 @@
 </div>
 
 <!-- 选课模态框 -->
-<div class="modal fade" id="selectCourseModal" tabindex="-1" aria-labelledby="selectCourseModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal fade" id="selectCourseModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="selectCourseModalLabel">学生选课</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title">学生选课</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="studentSnoForSelectCourse">
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-striped">
                         <thead>
                         <tr>
                             <th>课程号</th>
@@ -571,17 +240,17 @@
 </div>
 
 <!-- 退课模态框 -->
-<div class="modal fade" id="dropCourseModal" tabindex="-1" aria-labelledby="dropCourseModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal fade" id="dropCourseModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="dropCourseModalLabel">学生退课</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title">学生退课</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="studentSnoForDropCourse">
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-striped">
                         <thead>
                         <tr>
                             <th>课程号</th>
@@ -602,12 +271,12 @@
 </div>
 
 <!-- 编辑学生信息模态框 -->
-<div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="editStudentModal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editStudentModalLabel">编辑学生信息</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title">编辑学生信息</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <form id="editStudentForm">
@@ -642,12 +311,12 @@
 </div>
 
 <!-- 编辑课程信息模态框 -->
-<div class="modal fade" id="editCourseModal" tabindex="-1" aria-labelledby="editCourseModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="editCourseModal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editCourseModalLabel">编辑课程信息</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title">编辑课程信息</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <form id="editCourseForm">
@@ -678,12 +347,12 @@
 </div>
 
 <!-- 编辑选课成绩模态框 -->
-<div class="modal fade" id="editSCModal" tabindex="-1" aria-labelledby="editSCModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="editSCModal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editSCModalLabel">编辑选课成绩</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title">编辑选课成绩</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <form id="editSCForm">
@@ -710,17 +379,17 @@
 </div>
 
 <!-- 删除学生确认模态框 -->
-<div class="modal fade" id="deleteStudentConfirmModal" tabindex="-1" aria-labelledby="deleteStudentConfirmModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal fade" id="deleteStudentConfirmModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteStudentConfirmModalLabel">确认删除学生</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title">确认删除学生</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <p>该学生存在以下选课记录，这些记录将被一并删除，是否确认？</p>
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-striped">
                         <thead>
                         <tr>
                             <th>课程号</th>
@@ -742,17 +411,17 @@
 </div>
 
 <!-- 删除课程确认模态框 -->
-<div class="modal fade" id="deleteCourseConfirmModal" tabindex="-1" aria-labelledby="deleteCourseConfirmModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal fade" id="deleteCourseConfirmModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteCourseConfirmModalLabel">确认删除课程</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title">确认删除课程</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <p>该课程存在以下选课记录，这些记录将被一并删除，是否确认？</p>
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-striped">
                         <thead>
                         <tr>
                             <th>学号</th>
@@ -782,17 +451,6 @@
 
     // 页面加载完成后执行
     $(document).ready(function() {
-        // Initialize Bootstrap components like tabs
-        var triggerTabList = [].slice.call(document.querySelectorAll('#myTab button'))
-        triggerTabList.forEach(function (triggerEl) {
-            var tabTrigger = new bootstrap.Tab(triggerEl)
-
-            triggerEl.addEventListener('click', function (event) {
-                event.preventDefault()
-                tabTrigger.show()
-            })
-        })
-
         loadStudents();
         loadCourses();
         loadSCs();
@@ -813,9 +471,9 @@
                             <td>${student.sage}</td>
                             <td>${student.sdept}</td>
                             <td>
-                                <button class="btn btn-sm btn-warning me-1" onclick="showEditStudentModal('${student.sno}')">编辑</button>
-                                <button class="btn btn-sm btn-danger me-1" onclick="deleteStudent('${student.sno}')">删除</button>
-                                <button class="btn btn-sm btn-primary me-1" onclick="showSelectCourseModal('${student.sno}')">选课</button>
+                                <button class="btn btn-sm btn-warning" onclick="showEditStudentModal('${student.sno}')">编辑</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteStudent('${student.sno}')">删除</button>
+                                <button class="btn btn-sm btn-primary" onclick="showSelectCourseModal('${student.sno}')">选课</button>
                                 <button class="btn btn-sm btn-secondary" onclick="showDropCourseModal('${student.sno}')">退课</button>
                             </td>
                         </tr>
@@ -840,7 +498,7 @@
                             <td>${course.cpno || ''}</td>
                             <td>${course.ccredit}</td>
                             <td>
-                                <button class="btn btn-sm btn-warning me-1" onclick="showEditCourseModal('${course.cno}')">编辑</button>
+                                <button class="btn btn-sm btn-warning" onclick="showEditCourseModal('${course.cno}')">编辑</button>
                                 <button class="btn btn-sm btn-danger" onclick="deleteCourse('${course.cno}')">删除</button>
                             </td>
                         </tr>
@@ -864,7 +522,7 @@
                             <td>${sc.cno}</td>
                             <td>${sc.grade}</td>
                             <td>
-                                <button class="btn btn-sm btn-warning me-1" onclick="showEditSCModal('${sc.sno}', '${sc.cno}')">编辑</button>
+                                <button class="btn btn-sm btn-warning" onclick="showEditSCModal('${sc.sno}', '${sc.cno}')">编辑</button>
                                 <button class="btn btn-sm btn-danger" onclick="deleteSC('${sc.sno}', '${sc.cno}')">删除</button>
                             </td>
                         </tr>
@@ -910,11 +568,11 @@
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function() {
-                bootstrap.Modal.getInstance(document.getElementById('addStudentModal')).hide();
+                $('#addStudentModal').modal('hide');
                 loadStudents();
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert('添加学生失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+                alert('添加学生失败：' + errorThrown);
             }
         });
     }
@@ -923,21 +581,30 @@
     function showSelectCourseModal(sno) {
         $('#studentSnoForSelectCourse').val(sno);
 
+        // 获取学生已选课程
         $.get(`${API_BASE_URL}/sc/student/${sno}`, function(selectedCourses) {
             const selectedCourseIds = selectedCourses.map(sc => sc.cno);
 
+            // 获取所有课程
             $.get(`${API_BASE_URL}/course`, function(allCourses) {
+                // 筛选可选课程（未选 + 满足先修课程要求）
                 const availableCourses = allCourses.filter(course => {
+                    // 检查是否已选
                     if (selectedCourseIds.includes(course.cno)) {
                         return false;
                     }
+
+                    // 检查先修课程
                     if (!course.cpno) {
-                        return true;
+                        return true; // 无先修课程要求
                     }
+
+                    // 检查是否完成了先修课程
                     const prerequisiteCourse = selectedCourses.find(sc => sc.cno === course.cpno);
-                    return prerequisiteCourse && prerequisiteCourse.grade >= 60;
+                    return prerequisiteCourse && prerequisiteCourse.grade >= 60; // 成绩及格才算完成
                 });
 
+                // 显示可选课程
                 const tbody = $('#availableCoursesTableBody');
                 tbody.empty();
 
@@ -958,6 +625,8 @@
                         `);
                     });
                 }
+
+                // 显示模态框
                 new bootstrap.Modal(document.getElementById('selectCourseModal')).show();
             });
         });
@@ -968,7 +637,7 @@
         const formData = {
             sno: sno,
             cno: cno,
-            grade: 0
+            grade: 0 // 默认成绩为0
         };
 
         $.ajax({
@@ -982,7 +651,7 @@
                 loadSCs();
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert('选课失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+                alert('选课失败：' + errorThrown);
             }
         });
     }
@@ -991,8 +660,11 @@
     function showDropCourseModal(sno) {
         $('#studentSnoForDropCourse').val(sno);
 
+        // 获取学生已选课程
         $.get(`${API_BASE_URL}/sc/student/${sno}`, function(selectedCourses) {
+            // 获取课程详情
             $.get(`${API_BASE_URL}/course`, function(allCourses) {
+                // 合并选课信息和课程详情
                 const studentCourses = selectedCourses.map(sc => {
                     const courseInfo = allCourses.find(c => c.cno === sc.cno) || {};
                     return {
@@ -1001,6 +673,7 @@
                     };
                 });
 
+                // 显示学生的课程
                 const tbody = $('#studentCoursesTableBody');
                 tbody.empty();
 
@@ -1020,6 +693,8 @@
                         `);
                     });
                 }
+
+                // 显示模态框
                 new bootstrap.Modal(document.getElementById('dropCourseModal')).show();
             });
         });
@@ -1032,16 +707,18 @@
                 url: `${API_BASE_URL}/sc/${sno}/${cno}`,
                 type: 'DELETE',
                 success: function() {
+                    // 先关闭当前模态框
                     const modalElement = document.getElementById('dropCourseModal');
                     const modal = bootstrap.Modal.getInstance(modalElement);
                     if (modal) {
                         modal.hide();
                     }
+
                     alert('退课成功！');
-                    loadSCs();
+                    loadSCs(); // 重新加载选课数据
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    alert('退课失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+                    alert('退课失败：' + errorThrown);
                 }
             });
         }
@@ -1049,7 +726,11 @@
 
     // 显示编辑学生模态框
     function showEditStudentModal(sno) {
+        console.log("显示编辑学生模态框, 学号:", sno);
+
+        // 从已加载的学生数据中查找
         const student = allStudents.find(student => student.sno === sno);
+
         if (student) {
             $('#editStudentForm [name="sno"]').val(student.sno);
             $('#editStudentForm [name="sname"]').val(student.sname);
@@ -1057,11 +738,17 @@
             $('#editStudentForm [name="sage"]').val(student.sage);
             $('#editStudentForm [name="sdept"]').val(student.sdept);
 
+            // 显示模态框
             const modalElement = document.getElementById('editStudentModal');
             if (modalElement) {
-                new bootstrap.Modal(modalElement).show();
+                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+            } else {
+                console.error("找不到编辑学生模态框元素");
+                alert("系统错误：找不到编辑学生模态框");
             }
         } else {
+            console.error("找不到学号为", sno, "的学生信息");
             alert("找不到该学生信息，请刷新页面后重试");
         }
     }
@@ -1076,6 +763,8 @@
             sdept: $('#editStudentForm [name="sdept"]').val()
         };
 
+        console.log("更新学生信息:", formData);
+
         $.ajax({
             url: `${API_BASE_URL}/student/${formData.sno}`,
             type: 'PUT',
@@ -1087,7 +776,8 @@
                 loadStudents();
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert('更新学生信息失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+                console.error("更新学生信息失败:", jqXHR.status, textStatus, errorThrown, jqXHR.responseText);
+                alert('更新学生信息失败：' + (jqXHR.responseText || errorThrown));
             }
         });
     }
@@ -1123,7 +813,7 @@
                 loadCourses();
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert('更新课程信息失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+                alert('更新课程信息失败：' + errorThrown);
             }
         });
     }
@@ -1162,7 +852,7 @@
                 loadSCs();
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert('更新选课成绩失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+                alert('更新选课成绩失败：' + errorThrown);
             }
         });
     }
@@ -1187,7 +877,7 @@
                 loadCourses();
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert('添加课程失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+                alert('添加课程失败：' + errorThrown);
             }
         });
     }
@@ -1211,40 +901,55 @@
                 loadSCs();
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert('添加选课失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+                alert('添加选课失败：' + errorThrown);
             }
         });
     }
 
     // 删除学生
     function deleteStudent(sno) {
+        // 先查询该学生的选课记录
         $.get(`${API_BASE_URL}/sc/student/${sno}`, function(data) {
             if (data && data.length > 0) {
+                // 获取课程详情
                 $.get(`${API_BASE_URL}/course`, function(allCourses) {
+                    // 合并选课信息和课程详情
                     const studentCourses = data.map(sc => {
                         const courseInfo = allCourses.find(c => c.cno === sc.cno) || {};
-                        return { ...sc, cname: courseInfo.cname || '未知课程' };
+                        return {
+                            ...sc,
+                            cname: courseInfo.cname || '未知课程'
+                        };
                     });
 
+                    // 显示学生的课程
                     const tbody = $('#studentCoursesToDeleteTableBody');
                     tbody.empty();
+
                     studentCourses.forEach(course => {
                         tbody.append(`
                             <tr>
                                 <td>${course.cno}</td>
                                 <td>${course.cname}</td>
                                 <td>${course.grade}</td>
-                            </tr>`);
+                            </tr>
+                        `);
                     });
+
+                    // 保存要删除的学生学号
                     $('#studentSnoToDelete').val(sno);
+
+                    // 显示模态框
                     new bootstrap.Modal(document.getElementById('deleteStudentConfirmModal')).show();
                 });
             } else {
+                // 无选课记录，直接确认是否删除
                 if(confirm('确定要删除这个学生吗？')) {
                     executeDeleteStudent(sno);
                 }
             }
         }).fail(function() {
+            // 查询失败，直接询问是否删除
             if(confirm('确定要删除这个学生吗？')) {
                 executeDeleteStudent(sno);
             }
@@ -1253,61 +958,86 @@
 
     // 执行删除学生操作
     function executeDeleteStudent(sno) {
-        if (!sno) sno = $('#studentSnoToDelete').val();
+        // 如果没有传入sno参数，从隐藏字段获取
+        if (!sno) {
+            sno = $('#studentSnoToDelete').val();
+        }
 
+        // 先删除该学生的所有选课记录
         $.ajax({
             url: `${API_BASE_URL}/sc/student/${sno}`,
             type: 'DELETE',
             success: function() {
+                // 然后删除学生
                 $.ajax({
                     url: `${API_BASE_URL}/student/${sno}`,
                     type: 'DELETE',
                     success: function() {
+                        // 如果模态框是打开的，关闭它
                         const modalElement = document.getElementById('deleteStudentConfirmModal');
                         const modal = bootstrap.Modal.getInstance(modalElement);
-                        if (modal) modal.hide();
+                        if (modal) {
+                            modal.hide();
+                        }
                         loadStudents();
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        alert('删除学生失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+                        console.error('删除学生失败:', textStatus, errorThrown);
+                        alert('删除学生失败，请稍后重试');
                     }
                 });
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert('删除学生选课记录失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+                console.error('删除学生选课记录失败:', textStatus, errorThrown);
+                alert('删除学生选课记录失败，请稍后重试');
             }
         });
     }
 
     // 删除课程
     function deleteCourse(cno) {
+        // 先查询该课程的选课记录
         $.get(`${API_BASE_URL}/sc/course/${cno}`, function(data) {
             if (data && data.length > 0) {
+                // 获取学生详情
                 $.get(`${API_BASE_URL}/student`, function(allStudents) {
+                    // 合并选课信息和学生详情
                     const courseStudents = data.map(sc => {
                         const studentInfo = allStudents.find(s => s.sno === sc.sno) || {};
-                        return { ...sc, sname: studentInfo.sname || '未知学生' };
+                        return {
+                            ...sc,
+                            sname: studentInfo.sname || '未知学生'
+                        };
                     });
 
+                    // 显示选修该课程的学生
                     const tbody = $('#courseStudentsToDeleteTableBody');
                     tbody.empty();
+
                     courseStudents.forEach(student => {
                         tbody.append(`
                             <tr>
                                 <td>${student.sno}</td>
                                 <td>${student.sname}</td>
                                 <td>${student.grade}</td>
-                            </tr>`);
+                            </tr>
+                        `);
                     });
+
+                    // 保存要删除的课程号
                     $('#courseCnoToDelete').val(cno);
+
+                    // 显示模态框
                     new bootstrap.Modal(document.getElementById('deleteCourseConfirmModal')).show();
                 });
             } else {
+                // 无选课记录，直接确认是否删除
                 if(confirm('确定要删除这个课程吗？')) {
                     executeDeleteCourse(cno);
                 }
             }
         }).fail(function() {
+            // 查询失败，直接询问是否删除
             if(confirm('确定要删除这个课程吗？')) {
                 executeDeleteCourse(cno);
             }
@@ -1316,28 +1046,38 @@
 
     // 执行删除课程操作
     function executeDeleteCourse(cno) {
-        if (!cno) cno = $('#courseCnoToDelete').val();
+        // 如果没有传入cno参数，从隐藏字段获取
+        if (!cno) {
+            cno = $('#courseCnoToDelete').val();
+        }
 
+        // 先删除该课程的所有选课记录
         $.ajax({
             url: `${API_BASE_URL}/sc/course/${cno}`,
             type: 'DELETE',
             success: function() {
+                // 然后删除课程
                 $.ajax({
                     url: `${API_BASE_URL}/course/${cno}`,
                     type: 'DELETE',
                     success: function() {
+                        // 如果模态框是打开的，关闭它
                         const modalElement = document.getElementById('deleteCourseConfirmModal');
                         const modal = bootstrap.Modal.getInstance(modalElement);
-                        if (modal) modal.hide();
+                        if (modal) {
+                            modal.hide();
+                        }
                         loadCourses();
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        alert('删除课程失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+                        console.error('删除课程失败:', textStatus, errorThrown);
+                        alert('删除课程失败，请稍后重试');
                     }
                 });
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert('删除课程选课记录失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+                console.error('删除课程选课记录失败:', textStatus, errorThrown);
+                alert('删除课程选课记录失败，请稍后重试');
             }
         });
     }
@@ -1353,7 +1093,8 @@
                     loadSCs();
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    alert('删除选课记录失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+                    console.error('删除选课记录失败:', textStatus, errorThrown);
+                    alert('删除选课记录失败，请稍后重试');
                 }
             });
         }

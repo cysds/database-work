@@ -7,6 +7,14 @@
         <result column="Cpno" property="Cpno"/>
         <result column="Ccredit" property="Ccredit"/>
     </resultMap>
+    
+    <resultMap id="CourseWithStudentCountMap" type="com.cysds.dao.po.CourseWithStudentCount">
+        <id column="Cno" property="Cno"/>
+        <result column="Cname" property="Cname"/>
+        <result column="Cpno" property="Cpno"/>
+        <result column="Ccredit" property="Ccredit"/>
+        <result column="studentCount" property="studentCount"/>
+    </resultMap>
 
     <select id="queryAllCourse" resultMap="BaseResultMap">
         SELECT * FROM course
@@ -14,6 +22,21 @@
 
     <select id="queryCourseByCno" resultMap="BaseResultMap">
         SELECT * FROM course WHERE Cno = #{Cno}
+    </select>
+    
+    <select id="queryAllCourseWithStudentCount" resultMap="CourseWithStudentCountMap">
+        SELECT c.*, COUNT(sc.Sno) as studentCount
+        FROM course c
+        LEFT JOIN sc ON c.Cno = sc.Cno
+        GROUP BY c.Cno, c.Cname, c.Cpno, c.Ccredit
+    </select>
+    
+    <select id="queryCourseWithStudentCountByCno" resultMap="CourseWithStudentCountMap">
+        SELECT c.*, COUNT(sc.Sno) as studentCount
+        FROM course c
+        LEFT JOIN sc ON c.Cno = sc.Cno
+        WHERE c.Cno = #{Cno}
+        GROUP BY c.Cno, c.Cname, c.Cpno, c.Ccredit
     </select>
 
     <update id="updateCourseByCno">
