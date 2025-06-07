@@ -18,6 +18,14 @@
     <select id="querySCByCno" resultMap="BaseResultMap">
         SELECT * FROM sc WHERE Cno = #{Cno}
     </select>
+    
+    <select id="queryStudentsByCourse" resultType="java.util.HashMap">
+        SELECT s.Sno as sno, s.Sname as sname, sc.Grade as grade
+        FROM sc
+        JOIN student s ON sc.Sno = s.Sno
+        WHERE sc.Cno = #{Cno}
+        ORDER BY sc.Grade DESC
+    </select>
 
     <update id="updateSC">
         UPDATE sc SET Grade = #{Grade} WHERE Sno = #{Sno} AND Cno = #{Cno}

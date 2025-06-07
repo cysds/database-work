@@ -418,6 +418,11 @@
                 <i class="bi bi-clipboard-check-fill"></i> 选课管理
             </button>
         </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="teacher-tab" data-bs-toggle="tab" data-bs-target="#teacher" type="button" role="tab" aria-controls="teacher" aria-selected="false">
+                <i class="bi bi-person-workspace"></i> 教师管理
+            </button>
+        </li>
     </ul>
 
     <!-- Tab Content -->
@@ -429,27 +434,27 @@
                     <div class="search-input">
                         <i class="bi bi-search"></i>
                         <input type="text" placeholder="搜索学生 (姓名, 学号, 院系...)" id="studentSearch">
-                    </div>
+                </div>
                     <button class="btn btn-primary" onclick="showAddStudentModal()">
                         <i class="bi bi-plus-lg"></i> 添加学生
                     </button>
-                </div>
+            </div>
 
-                <div class="table-responsive">
+            <div class="table-responsive">
                     <table class="table">
-                        <thead>
-                        <tr>
-                            <th>学号</th>
-                            <th>姓名</th>
-                            <th>性别</th>
-                            <th>年龄</th>
-                            <th>院系</th>
+                    <thead>
+                    <tr>
+                        <th>学号</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>年龄</th>
+                        <th>院系</th>
                             <th>平均成绩</th>
                             <th class="text-end">操作</th>
-                        </tr>
-                        </thead>
-                        <tbody id="studentTableBody"></tbody>
-                    </table>
+                    </tr>
+                    </thead>
+                    <tbody id="studentTableBody"></tbody>
+                </table>
                 </div>
             </div>
         </div>
@@ -461,27 +466,27 @@
                     <div class="search-input">
                         <i class="bi bi-search"></i>
                         <input type="text" placeholder="搜索课程 (课程名, 课程号...)" id="courseSearch">
-                    </div>
+                </div>
                     <button class="btn btn-primary" onclick="showAddCourseModal()">
                         <i class="bi bi-plus-lg"></i> 添加课程
                     </button>
-                </div>
+            </div>
 
-                <div class="table-responsive">
+            <div class="table-responsive">
                     <table class="table">
-                        <thead>
-                        <tr>
-                            <th>课程号</th>
-                            <th>课程名</th>
-                            <th>先修课程</th>
-                            <th>学分</th>
+                    <thead>
+                    <tr>
+                        <th>课程号</th>
+                        <th>课程名</th>
+                        <th>先修课程</th>
+                        <th>学分</th>
                             <th>选课人数</th>
                             <th>平均成绩</th>
                             <th class="text-end">操作</th>
-                        </tr>
-                        </thead>
-                        <tbody id="courseTableBody"></tbody>
-                    </table>
+                    </tr>
+                    </thead>
+                    <tbody id="courseTableBody"></tbody>
+                </table>
                 </div>
             </div>
         </div>
@@ -493,23 +498,51 @@
                     <div class="search-input">
                         <i class="bi bi-search"></i>
                         <input type="text" placeholder="搜索选课记录 (学号, 课程号...)" id="scSearch">
-                    </div>
+                </div>
                     <button class="btn btn-primary" onclick="showAddSCModal()">
                         <i class="bi bi-plus-lg"></i> 添加选课
                     </button>
-                </div>
+            </div>
+
+            <div class="table-responsive">
+                    <table class="table">
+                    <thead>
+                    <tr>
+                        <th>学号</th>
+                        <th>课程号</th>
+                        <th>成绩</th>
+                            <th class="text-end">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="scTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+        
+        <!-- 教师管理 -->
+        <div class="tab-pane fade" id="teacher" role="tabpanel" aria-labelledby="teacher-tab">
+            <div class="content-card">
+                <div class="search-container">
+                    <div class="search-input">
+                        <i class="bi bi-search"></i>
+                        <input type="text" placeholder="搜索教师 (姓名, 课程...)" id="teacherSearch">
+                    </div>
+                    <button class="btn btn-primary" onclick="showAddTeacherModal()">
+                        <i class="bi bi-plus-lg"></i> 添加教师
+                    </button>
+</div>
 
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>学号</th>
-                            <th>课程号</th>
-                            <th>成绩</th>
+                            <th>教师姓名</th>
+                            <th>讲授课程</th>
                             <th class="text-end">操作</th>
                         </tr>
                         </thead>
-                        <tbody id="scTableBody"></tbody>
+                        <tbody id="teacherTableBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -642,13 +675,13 @@
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th>课程号</th>
-                            <th>课程名</th>
-                            <th>先修课程</th>
-                            <th>学分</th>
+                            <tr>
+                                <th>课程号</th>
+                                <th>课程名</th>
+                                <th>先修课程</th>
+                                <th>学分</th>
                             <th class="text-end">操作</th>
-                        </tr>
+                            </tr>
                         </thead>
                         <tbody id="availableCoursesTableBody"></tbody>
                     </table>
@@ -674,12 +707,12 @@
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th>课程号</th>
-                            <th>课程名</th>
-                            <th>成绩</th>
+                            <tr>
+                                <th>课程号</th>
+                                <th>课程名</th>
+                                <th>成绩</th>
                             <th class="text-end">操作</th>
-                        </tr>
+                            </tr>
                         </thead>
                         <tbody id="studentCoursesTableBody"></tbody>
                     </table>
@@ -813,11 +846,11 @@
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th>课程号</th>
-                            <th>课程名称</th>
-                            <th>成绩</th>
-                        </tr>
+                            <tr>
+                                <th>课程号</th>
+                                <th>课程名称</th>
+                                <th>成绩</th>
+                            </tr>
                         </thead>
                         <tbody id="studentCoursesToDeleteTableBody"></tbody>
                     </table>
@@ -893,6 +926,140 @@
     </div>
 </div>
 
+<!-- 添加教师模态框 -->
+<div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addTeacherModalLabel">添加教师</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addTeacherForm">
+                    <div class="mb-3">
+                        <label for="tNameAdd" class="form-label">教师姓名</label>
+                        <input type="text" class="form-control" id="tNameAdd" name="tName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tCourseAdd" class="form-label">讲授课程</label>
+                        <select class="form-control" id="tCourseAdd" name="tCourse" required>
+                            <option value="" disabled selected>请选择课程</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="addTeacher()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑教师模态框 -->
+<div class="modal fade" id="editTeacherModal" tabindex="-1" aria-labelledby="editTeacherModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editTeacherModalLabel">编辑教师</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editTeacherForm">
+                    <div class="mb-3">
+                        <label for="tNameEdit" class="form-label">教师姓名</label>
+                        <input type="text" class="form-control" id="tNameEdit" name="tName" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tCourseEdit" class="form-label">讲授课程</label>
+                        <select class="form-control" id="tCourseEdit" name="tCourse" required>
+                            <option value="" disabled>请选择课程</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="updateTeacher()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 教师的学生和成绩模态框 -->
+<div class="modal fade" id="teacherStudentsModal" tabindex="-1" aria-labelledby="teacherStudentsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="teacherStudentsModalLabel">选修课程的学生成绩</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="course-info mb-3">
+                    <strong>教师:</strong> <span id="modalTeacherName"></span>
+                    <strong class="ms-3">课程:</strong> <span id="modalCourseName"></span>
+                </div>
+                <div class="table-container">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>学号</th>
+                                <th>学生姓名</th>
+                                <th>成绩</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teacherStudentsTableBody">
+                            <!-- 学生成绩数据将在这里动态添加 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑成绩模态框 -->
+<div class="modal fade" id="editGradeModal" tabindex="-1" aria-labelledby="editGradeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editGradeModalLabel">修改成绩</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editGradeForm">
+                    <div class="mb-3">
+                        <label for="studentNameGrade" class="form-label">学生姓名</label>
+                        <input type="text" class="form-control" id="studentNameGrade" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="studentNoGrade" class="form-label">学号</label>
+                        <input type="text" class="form-control" id="studentNoGrade" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="courseNameGrade" class="form-label">课程</label>
+                        <input type="text" class="form-control" id="courseNameGrade" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="gradeInput" class="form-label">成绩</label>
+                        <input type="number" class="form-control" id="gradeInput" min="0" max="100" required>
+                    </div>
+                    <input type="hidden" id="snoGrade">
+                    <input type="hidden" id="cnoGrade">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="updateGrade()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -909,6 +1076,7 @@
         loadStudents();
         loadCourses();
         loadSCs();
+        loadTeachers();
     });
 
     // 初始化搜索功能
@@ -926,6 +1094,11 @@
         $('#scSearch').on('input', function() {
             const searchTerm = $(this).val().toLowerCase();
             filterTable('#scTableBody tr', searchTerm);
+        });
+        
+        $('#teacherSearch').on('input', function() {
+            const searchTerm = $(this).val().toLowerCase();
+            filterTable('#teacherTableBody tr', searchTerm);
         });
     }
 
@@ -1049,7 +1222,7 @@
                 
                 // 渲染表格
                 studentsWithAvgGrade.forEach(student => {
-                    tbody.append(`
+                tbody.append(`
                         <tr class="fade-in">
                             <td>${student.sno}</td>
                             <td>${student.sname}</td>
@@ -1100,7 +1273,7 @@
             Promise.all(avgGradePromises).then(coursesWithAvgGrade => {
                 // 渲染表格
                 coursesWithAvgGrade.forEach(course => {
-                    tbody.append(`
+                tbody.append(`
                         <tr class="fade-in">
                             <td>${course.cno}</td>
                             <td>${course.cname}</td>
@@ -1139,10 +1312,10 @@
             data.forEach(sc => {
                 tbody.append(`
                       <tr class="fade-in">
-                          <td>${sc.sno}</td>
-                          <td>${sc.cno}</td>
-                          <td>${sc.grade}</td>
-                          <td>
+                            <td>${sc.sno}</td>
+                            <td>${sc.cno}</td>
+                            <td>${sc.grade}</td>
+                            <td>
                               <div class="action-buttons">
                                   <button class="btn-icon btn-edit" onclick="showEditSCModal('${sc.sno}', '${sc.cno}')" title="编辑">
                                       <i class="bi bi-pencil-fill"></i>
@@ -1151,9 +1324,9 @@
                                       <i class="bi bi-trash-fill"></i>
                                   </button>
                               </div>
-                          </td>
-                      </tr>
-                  `);
+                            </td>
+                        </tr>
+                    `);
             });
         }).fail(function(jqXHR, textStatus, errorThrown) {
             console.error('加载选课数据失败:', textStatus, errorThrown);
@@ -1207,10 +1380,10 @@
     // 显示选课模态框
     function showSelectCourseModal(sno) {
         $('#studentSnoForSelectCourse').val(sno);
-
+        
         $.get(`${API_BASE_URL}/sc/student/${sno}`, function(selectedCourses) {
             const selectedCourseIds = selectedCourses.map(sc => sc.cno);
-
+            
             $.get(`${API_BASE_URL}/course`, function(allCourses) {
                 const availableCourses = allCourses.filter(course => {
                     if (selectedCourseIds.includes(course.cno)) {
@@ -1222,36 +1395,36 @@
                     const prerequisiteCourse = selectedCourses.find(sc => sc.cno === course.cpno);
                     return prerequisiteCourse && prerequisiteCourse.grade >= 60;
                 });
-
+                
                 const tbody = $('#availableCoursesTableBody');
                 tbody.empty();
-
+                
                 if (availableCourses.length === 0) {
                     tbody.append('<tr><td colspan="5" class="text-center">没有可选课程</td></tr>');
                 } else {
                     availableCourses.forEach(course => {
                         tbody.append(`
                               <tr class="fade-in">
-                                  <td>${course.cno}</td>
-                                  <td>${course.cname}</td>
-                                  <td>${course.cpno || '无'}</td>
-                                  <td>${course.ccredit}</td>
-                                  <td>
+                                <td>${course.cno}</td>
+                                <td>${course.cname}</td>
+                                <td>${course.cpno || '无'}</td>
+                                <td>${course.ccredit}</td>
+                                <td>
                                       <div class="action-buttons">
                                           <button class="btn-icon btn-select" onclick="selectCourse('${sno}', '${course.cno}')" title="选择">
                                               <i class="bi bi-plus-circle-fill"></i>
                                           </button>
                                       </div>
-                                  </td>
-                              </tr>
-                          `);
+                                </td>
+                            </tr>
+                        `);
                     });
                 }
                 new bootstrap.Modal(document.getElementById('selectCourseModal')).show();
             });
         });
     }
-
+    
     // 选课
     function selectCourse(sno, cno) {
         const formData = {
@@ -1259,7 +1432,7 @@
             cno: cno,
             grade: 0
         };
-
+        
         $.ajax({
             url: `${API_BASE_URL}/sc`,
             type: 'POST',
@@ -1275,11 +1448,11 @@
             }
         });
     }
-
+    
     // 显示退课模态框
     function showDropCourseModal(sno) {
         $('#studentSnoForDropCourse').val(sno);
-
+        
         $.get(`${API_BASE_URL}/sc/student/${sno}`, function(selectedCourses) {
             $.get(`${API_BASE_URL}/course`, function(allCourses) {
                 const studentCourses = selectedCourses.map(sc => {
@@ -1289,35 +1462,35 @@
                         cname: courseInfo.cname || '未知课程'
                     };
                 });
-
+                
                 const tbody = $('#studentCoursesTableBody');
                 tbody.empty();
-
+                
                 if (studentCourses.length === 0) {
                     tbody.append('<tr><td colspan="4" class="text-center">没有选课记录</td></tr>');
                 } else {
                     studentCourses.forEach(course => {
                         tbody.append(`
                               <tr class="fade-in">
-                                  <td>${course.cno}</td>
-                                  <td>${course.cname}</td>
-                                  <td>${course.grade}</td>
-                                  <td>
+                                <td>${course.cno}</td>
+                                <td>${course.cname}</td>
+                                <td>${course.grade}</td>
+                                <td>
                                       <div class="action-buttons">
                                           <button class="btn-icon btn-delete" onclick="dropCourse('${sno}', '${course.cno}')" title="退课">
                                               <i class="bi bi-dash-circle-fill"></i>
                                           </button>
                                       </div>
-                                  </td>
-                              </tr>
-                          `);
+                                </td>
+                            </tr>
+                        `);
                     });
                 }
                 new bootstrap.Modal(document.getElementById('dropCourseModal')).show();
             });
         });
     }
-
+    
     // 退课
     function dropCourse(sno, cno) {
         if (confirm('确定要退选该课程吗？')) {
@@ -1339,7 +1512,7 @@
             });
         }
     }
-
+    
     // 显示编辑学生模态框
     function showEditStudentModal(sno) {
         const student = allStudents.find(student => student.sno === sno);
@@ -1349,7 +1522,7 @@
             $('#editStudentForm [name="sgender"]').val(student.sgender);
             $('#editStudentForm [name="sage"]').val(student.sage);
             $('#editStudentForm [name="sdept"]').val(student.sdept);
-
+            
             const modalElement = document.getElementById('editStudentModal');
             if (modalElement) {
                 new bootstrap.Modal(modalElement).show();
@@ -1358,7 +1531,7 @@
             alert("找不到该学生信息，请刷新页面后重试");
         }
     }
-
+    
     // 更新学生信息
     function updateStudent() {
         const formData = {
@@ -1368,7 +1541,7 @@
             sage: parseInt($('#editStudentForm [name="sage"]').val()),
             sdept: $('#editStudentForm [name="sdept"]').val()
         };
-
+        
         $.ajax({
             url: `${API_BASE_URL}/student/${formData.sno}`,
             type: 'PUT',
@@ -1384,7 +1557,7 @@
             }
         });
     }
-
+    
     // 显示编辑课程模态框
     function showEditCourseModal(cno) {
         $.get(`${API_BASE_URL}/course/${cno}`, function(course) {
@@ -1395,7 +1568,7 @@
             new bootstrap.Modal(document.getElementById('editCourseModal')).show();
         });
     }
-
+    
     // 更新课程信息
     function updateCourse() {
         const formData = {
@@ -1404,7 +1577,7 @@
             cpno: $('#editCourseForm [name="cpno"]').val() || null,
             ccredit: parseInt($('#editCourseForm [name="ccredit"]').val())
         };
-
+        
         $.ajax({
             url: `${API_BASE_URL}/course/${formData.cno}`,
             type: 'PUT',
@@ -1420,7 +1593,7 @@
             }
         });
     }
-
+    
     // 显示编辑选课成绩模态框
     function showEditSCModal(sno, cno) {
         $.get(`${API_BASE_URL}/sc/student/${sno}`, function(scList) {
@@ -1435,7 +1608,7 @@
             }
         });
     }
-
+    
     // 更新选课成绩
     function updateSC() {
         const formData = {
@@ -1443,7 +1616,7 @@
             cno: $('#editSCForm [name="cno"]').val(),
             grade: parseInt($('#editSCForm [name="grade"]').val())
         };
-
+        
         $.ajax({
             url: `${API_BASE_URL}/sc`,
             type: 'PUT',
@@ -1484,7 +1657,7 @@
             }
         });
     }
-
+    
     // 添加选课
     function addSC() {
         const formData = {
@@ -1518,15 +1691,15 @@
                         const courseInfo = allCourses.find(c => c.cno === sc.cno) || {};
                         return { ...sc, cname: courseInfo.cname || '未知课程' };
                     });
-
+                    
                     const tbody = $('#studentCoursesToDeleteTableBody');
                     tbody.empty();
                     studentCourses.forEach(course => {
                         tbody.append(`
                               <tr class="fade-in">
-                                  <td>${course.cno}</td>
-                                  <td>${course.cname}</td>
-                                  <td>${course.grade}</td>
+                                <td>${course.cno}</td>
+                                <td>${course.cname}</td>
+                                <td>${course.grade}</td>
                               </tr>`);
                     });
                     $('#studentSnoToDelete').val(sno);
@@ -1543,25 +1716,25 @@
             }
         });
     }
-
+    
     // 执行删除学生操作
     function executeDeleteStudent(sno) {
         if (!sno) sno = $('#studentSnoToDelete').val();
-
+        
         $.ajax({
             url: `${API_BASE_URL}/sc/student/${sno}`,
             type: 'DELETE',
             success: function() {
-                $.ajax({
-                    url: `${API_BASE_URL}/student/${sno}`,
-                    type: 'DELETE',
-                    success: function() {
-                        const modalElement = document.getElementById('deleteStudentConfirmModal');
-                        const modal = bootstrap.Modal.getInstance(modalElement);
+        $.ajax({
+            url: `${API_BASE_URL}/student/${sno}`,
+            type: 'DELETE',
+            success: function() {
+                const modalElement = document.getElementById('deleteStudentConfirmModal');
+                const modal = bootstrap.Modal.getInstance(modalElement);
                         if (modal) modal.hide();
-                        loadStudents();
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
+                loadStudents();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
                         alert('删除学生失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
                     }
                 });
@@ -1615,23 +1788,23 @@
             url: `${API_BASE_URL}/sc/course/${cno}`,
             type: 'DELETE',
             success: function() {
-                $.ajax({
-                    url: `${API_BASE_URL}/course/${cno}`,
-                    type: 'DELETE',
-                    success: function() {
+            $.ajax({
+                url: `${API_BASE_URL}/course/${cno}`,
+                type: 'DELETE',
+                success: function() {
                         const modalElement = document.getElementById('deleteCourseConfirmModal');
                         const modal = bootstrap.Modal.getInstance(modalElement);
                         if (modal) modal.hide();
-                        loadCourses();
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
+                    loadCourses();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
                         alert('删除课程失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
-                    }
-                });
+                }
+            });
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 alert('删除课程选课记录失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
-            }
+        }
         });
     }
 
@@ -1693,6 +1866,289 @@
             alert('加载选修课程的学生数据失败，请检查后端服务是否正常运行');
         });
     }
+
+    // 加载教师数据
+    function loadTeachers() {
+        $.get(`${API_BASE_URL}/teacher`, function(data) {
+            const tbody = $('#teacherTableBody');
+            tbody.empty();
+            
+            if (data.length === 0) {
+                tbody.append('<tr><td colspan="3" class="text-center">没有教师数据</td></tr>');
+                return;
+            }
+            
+            data.forEach(teacher => {
+                tbody.append(`
+                    <tr class="fade-in">
+                        <td>${teacher.tName}</td>
+                        <td>${teacher.tCourse || '未分配'}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-view" onclick="showTeacherStudentsModal('${teacher.tName}')" title="查看学生">
+                                    <i class="bi bi-people-fill"></i>
+                                </button>
+                                <button class="btn-icon btn-edit" onclick="showEditTeacherModal('${teacher.tName}')" title="编辑">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </button>
+                                <button class="btn-icon btn-delete" onclick="deleteTeacher('${teacher.tName}')" title="删除">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `);
+            });
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.error('加载教师数据失败:', textStatus, errorThrown);
+            alert('加载教师数据失败，请检查后端服务是否正常运行');
+        });
+    }
+    
+    // 显示添加教师模态框
+    function showAddTeacherModal() {
+        $('#addTeacherForm')[0].reset();
+        
+        // 获取所有课程提供选择
+        $.get(`${API_BASE_URL}/course`, function(courses) {
+            const select = $('#tCourseAdd');
+            select.find('option:not(:first)').remove();
+            
+            courses.forEach(course => {
+                select.append(`<option value="${course.cno}">${course.cname}</option>`);
+            });
+            
+            // 确保模态框显示后，先清除以前可能的选择
+            $('#tNameAdd').val('');
+            $('#tCourseAdd').val('');
+            
+            new bootstrap.Modal(document.getElementById('addTeacherModal')).show();
+        });
+    }
+    
+    // 显示编辑教师模态框
+    function showEditTeacherModal(tName) {
+        // 获取教师信息
+        $.get(`${API_BASE_URL}/teacher/${tName}`, function(teacher) {
+            $('#editTeacherForm [name="tName"]').val(teacher.tName);
+            
+            // 获取所有课程提供选择
+            $.get(`${API_BASE_URL}/course`, function(courses) {
+                const select = $('#tCourseEdit');
+                select.empty();
+                select.append('<option value="" disabled>请选择课程</option>');
+                
+                courses.forEach(course => {
+                    const selected = course.cno === teacher.tCourse ? 'selected' : '';
+                    select.append(`<option value="${course.cno}" ${selected}>${course.cname}</option>`);
+                });
+                
+                new bootstrap.Modal(document.getElementById('editTeacherModal')).show();
+            });
+        });
+    }
+    
+    // 删除教师
+    function deleteTeacher(tName) {
+        if (confirm(`确定要删除教师"${tName}"吗？`)) {
+            $.ajax({
+                url: `${API_BASE_URL}/teacher/${tName}`,
+                type: 'DELETE',
+                success: function() {
+                    alert('删除教师成功！');
+                    loadTeachers();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('删除教师失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+                }
+            });
+        }
+    }
+    
+    // 添加教师
+    function addTeacher() {
+        const tNameValue = $('#tNameAdd').val();
+        const tCourseValue = $('#tCourseAdd').val();
+        
+        // 添加表单验证
+        if (!tNameValue || tNameValue.trim() === '') {
+            alert('请输入教师姓名');
+            return;
+        }
+        
+        if (!tCourseValue || tCourseValue === '') {
+            alert('请选择讲授课程');
+            return;
+        }
+        
+        console.log('tNameAdd value:', tNameValue);
+        console.log('tCourseAdd value:', tCourseValue);
+        
+        // 确保属性名与后端实体类的属性名完全一致
+        const formData = JSON.stringify({
+            "tName": tNameValue,
+            "tCourse": tCourseValue
+        });
+        
+        console.log('发送的JSON数据:', formData);
+
+        $.ajax({
+            url: `${API_BASE_URL}/teacher`,
+            type: 'POST',
+            contentType: 'application/json',
+            data: formData,
+            success: function() {
+                alert('添加教师成功！');
+                bootstrap.Modal.getInstance(document.getElementById('addTeacherModal')).hide();
+                loadTeachers();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('添加教师失败:', jqXHR.responseJSON || errorThrown);
+                alert('添加教师失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+            }
+        });
+    }
+    
+    // 更新教师信息
+    function updateTeacher() {
+        const tNameValue = $('#tNameEdit').val();
+        const tCourseValue = $('#tCourseEdit').val();
+        
+        if (!tNameValue || tNameValue.trim() === '') {
+            alert('教师姓名不能为空');
+            return;
+        }
+        
+        if (!tCourseValue || tCourseValue === '') {
+            alert('请选择讲授课程');
+            return;
+        }
+        
+        // 确保属性名与后端实体类的属性名完全一致
+        const formData = JSON.stringify({
+            "tName": tNameValue,
+            "tCourse": tCourseValue
+        });
+        
+        console.log('发送的JSON数据:', formData);
+
+        $.ajax({
+            url: `${API_BASE_URL}/teacher/${tNameValue}`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: formData,
+            success: function() {
+                alert('更新教师信息成功！');
+                bootstrap.Modal.getInstance(document.getElementById('editTeacherModal')).hide();
+                loadTeachers();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('更新教师失败:', jqXHR.responseJSON || errorThrown);
+                alert('更新教师信息失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+            }
+        });
+    }
+
+    // 显示教师的学生和成绩模态框
+    function showTeacherStudentsModal(tName) {
+        // 获取教师信息和课程
+        $.get(`${API_BASE_URL}/teacher/${tName}`, function(teacher) {
+            if (!teacher.tCourse) {
+                alert('该教师未分配课程');
+                return;
+            }
+            
+            $('#modalTeacherName').text(tName);
+            $('#modalCourseName').text(teacher.tCourse);
+            
+            // 获取选修该教师课程的学生和成绩
+            $.get(`${API_BASE_URL}/sc/teacher/${tName}`, function(students) {
+                const tbody = $('#teacherStudentsTableBody');
+                tbody.empty();
+                
+                if (students.length === 0) {
+                    tbody.append('<tr><td colspan="4" class="text-center">没有学生选修此课程</td></tr>');
+                } else {
+                    students.forEach(student => {
+                        tbody.append(`
+                            <tr class="fade-in">
+                                <td>${student.sno}</td>
+                                <td>${student.sname}</td>
+                                <td>${student.grade}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary" onclick="showEditGradeModal('${student.sno}', '${teacher.tCourse}', '${student.sname}', ${student.grade})">
+                                        编辑成绩
+                                    </button>
+                                </td>
+                            </tr>
+                        `);
+                    });
+                }
+                
+                new bootstrap.Modal(document.getElementById('teacherStudentsModal')).show();
+            }).fail(function(jqXHR) {
+                console.error('获取学生数据失败:', jqXHR);
+                alert('获取学生数据失败');
+            });
+        }).fail(function(jqXHR) {
+            console.error('获取教师信息失败:', jqXHR);
+            alert('获取教师信息失败');
+        });
+    }
+    
+    // 显示编辑成绩模态框
+    function showEditGradeModal(sno, cno, sname, grade) {
+        // 隐藏当前模态框，显示编辑成绩模态框
+        bootstrap.Modal.getInstance(document.getElementById('teacherStudentsModal')).hide();
+        
+        // 设置表单值
+        $('#studentNoGrade').val(sno);
+        $('#studentNameGrade').val(sname);
+        $('#courseNameGrade').val(cno);
+        $('#gradeInput').val(grade);
+        $('#snoGrade').val(sno);
+        $('#cnoGrade').val(cno);
+        
+        // 显示编辑成绩模态框
+        new bootstrap.Modal(document.getElementById('editGradeModal')).show();
+    }
+    
+    // 更新成绩
+    function updateGrade() {
+        const sno = $('#snoGrade').val();
+        const cno = $('#cnoGrade').val();
+        const grade = $('#gradeInput').val();
+        
+        if (grade < 0 || grade > 100) {
+            alert('成绩必须在0-100之间');
+            return;
+        }
+        
+        $.ajax({
+            url: `${API_BASE_URL}/sc`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "Sno": sno,
+                "Cno": cno,
+                "Grade": parseInt(grade)
+            }),
+            success: function() {
+                alert('成绩更新成功！');
+                bootstrap.Modal.getInstance(document.getElementById('editGradeModal')).hide();
+                
+                // 刷新教师学生列表
+                const teacherName = $('#modalTeacherName').text();
+                setTimeout(() => {
+                    showTeacherStudentsModal(teacherName);
+                }, 300);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('更新成绩失败:', jqXHR.responseJSON || errorThrown);
+                alert('更新成绩失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+            }
+        });
+    }
 </script>
 </body>
-</html>
+</html> 

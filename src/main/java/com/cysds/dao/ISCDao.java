@@ -4,6 +4,7 @@ import com.cysds.dao.po.SC;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: 谢玮杰
@@ -20,4 +21,6 @@ public interface ISCDao {
     void addSC(SC sc);
     void deleteSCBySno(String sNo);
     void deleteSCByCno(String cNo);
+    // 查询选修某课程的所有学生及其成绩
+    List<Map<String, Object>> queryStudentsByCourse(String cNo);
 }

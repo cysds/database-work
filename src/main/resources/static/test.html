@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>API测试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .result {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        button {
+            padding: 8px 15px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>API 连接测试</h1>
+    
+    <div>
+        <label for="apiBaseUrl">API基础URL: </label>
+        <input type="text" id="apiBaseUrl" value="http://localhost:8080/api" style="width: 300px;">
+    </div>
+
+    <div>
+        <button onclick="testStudentAPI()">测试学生API</button>
+        <button onclick="testCourseAPI()">测试课程API</button>
+        <button onclick="testSCAPI()">测试选课API</button>
+    </div>
+
+    <h3>测试结果:</h3>
+    <div id="testResults"></div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function appendResult(message, isError) {
+            const resultDiv = document.createElement('div');
+            resultDiv.className = 'result ' + (isError ? 'error' : 'success');
+            resultDiv.textContent = message;
+            document.getElementById('testResults').prepend(resultDiv);
+        }
+
+        function testAPI(endpoint, name) {
+            const baseUrl = document.getElementById('apiBaseUrl').value;
+            appendResult(`正在测试 ${name} API: ${baseUrl}${endpoint}...`);
+            
+            return $.ajax({
+                url: `${baseUrl}${endpoint}`,
+                type: 'GET',
+                success: function(data) {
+                    appendResult(`✅ ${name} API 连接成功! 返回 ${data.length} 条记录`);
+                    console.log('API返回数据:', data);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    appendResult(`❌ ${name} API 连接失败: ${textStatus} - ${errorThrown}`, true);
+                    console.error('错误详情:', jqXHR);
+                }
+            });
+        }
+
+        function testStudentAPI() {
+            testAPI('/student', '学生');
+        }
+
+        function testCourseAPI() {
+            testAPI('/course', '课程');
+        }
+
+        function testSCAPI() {
+            testAPI('/sc', '选课');
+        }
+    </script>
+</body>
+</html> 

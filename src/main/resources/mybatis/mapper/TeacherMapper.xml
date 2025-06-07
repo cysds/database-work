@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cysds.dao.ITeacherDao">
+    <resultMap id="BaseResultMap" type="com.cysds.dao.po.Teacher">
+        <id column="t_name" property="tName"/>
+        <result column="t_course" property="tCourse"/>
+    </resultMap>
+
+    <select id="queryAllTeacher" resultMap="BaseResultMap">
+        SELECT * FROM teacher
+    </select>
+
+    <select id="queryTeacherByName" resultMap="BaseResultMap">
+        SELECT * FROM teacher WHERE t_name = #{tName}
+    </select>
+
+    <insert id="addTeacher">
+        INSERT INTO teacher (t_name, t_course) VALUES (#{tName}, #{tCourse})
+    </insert>
+
+    <update id="updateTeacher">
+        UPDATE teacher SET t_course = #{tCourse} WHERE t_name = #{tName}
+    </update>
+
+    <delete id="deleteTeacherByName">
+        DELETE FROM teacher WHERE t_name = #{tName}
+    </delete>
+</mapper> 
