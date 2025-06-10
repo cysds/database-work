@@ -38,7 +38,7 @@
         WHERE c.Cno = #{Cno}
         GROUP BY c.Cno, c.Cname, c.Cpno, c.Ccredit
     </select>
-
+<!---->
     <update id="updateCourseByCno">
         UPDATE course SET Cname = #{Cname}, Cpno = #{Cpno}, Ccredit = #{Ccredit} WHERE Cno = #{Cno}
     </update>

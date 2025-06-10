@@ -47,6 +47,13 @@ public class SCController {
         }
         return new ArrayList<>();
     }
+    
+    @GetMapping("/search")
+    public List<Map<String, Object>> searchByCourseNameAndMinGrade(
+            @RequestParam("courseName") String courseName,
+            @RequestParam("minGrade") Integer minGrade) {
+        return scDao.querySCByCourseNameAndMinGrade(courseName, minGrade);
+    }
 
     @PostMapping
     public String add(@RequestBody SC sc) {

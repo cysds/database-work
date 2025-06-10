@@ -26,6 +26,15 @@
         WHERE sc.Cno = #{Cno}
         ORDER BY sc.Grade DESC
     </select>
+    
+    <select id="querySCByCourseNameAndMinGrade" resultType="java.util.HashMap">
+        SELECT s.Sno as sno, s.Sname as sname, c.Cname as cname, c.Cno as cno, sc.Grade as grade
+        FROM sc
+        JOIN student s ON sc.Sno = s.Sno
+        JOIN course c ON sc.Cno = c.Cno
+        WHERE c.Cname = #{courseName} AND sc.Grade >= #{minGrade}
+        ORDER BY sc.Grade DESC
+    </select>
 
     <update id="updateSC">
         UPDATE sc SET Grade = #{Grade} WHERE Sno = #{Sno} AND Cno = #{Cno}

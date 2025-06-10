@@ -23,4 +23,6 @@ public interface ISCDao {
     void deleteSCByCno(String cNo);
     // 查询选修某课程的所有学生及其成绩
     List<Map<String, Object>> queryStudentsByCourse(String cNo);
+    // 查询选修某课程且成绩大于等于指定分数的记录
+    List<Map<String, Object>> querySCByCourseNameAndMinGrade(String courseName, Integer minGrade);
 }

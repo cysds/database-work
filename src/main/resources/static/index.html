@@ -71,12 +71,14 @@
         }
 
         .nav-tabs {
-            border: none;
-            background-color: var(--darker-blue);
-            border-radius: 0.5rem;
-            padding: 0.25rem;
-            margin-bottom: 1.5rem;
-        }
+    border: none;
+    background-color: var(--darker-blue);
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
 
         .nav-tabs .nav-link {
             color: var(--text-secondary);
@@ -503,6 +505,26 @@
                         <i class="bi bi-plus-lg"></i> 添加选课
                     </button>
             </div>
+            
+            <!-- 添加成绩查询表单 -->
+            <div class="mb-3 p-3 border rounded" style="background-color: var(--darker-blue);">
+                <h5 class="mb-3">成绩条件查询</h5>
+                <div class="row g-3">
+                    <div class="col-md-5">
+                        <label for="searchCourseName" class="form-label">课程名称</label>
+                        <input type="text" class="form-control" id="searchCourseName" placeholder="输入完整课程名称">
+                    </div>
+                    <div class="col-md-5">
+                        <label for="searchMinGrade" class="form-label">最低分数</label>
+                        <input type="number" class="form-control" id="searchMinGrade" min="0" max="100" value="60">
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button class="btn btn-primary w-100" onclick="searchByCourseAndGrade()">
+                            <i class="bi bi-search"></i> 查询
+                        </button>
+                    </div>
+                </div>
+            </div>
 
             <div class="table-responsive">
                     <table class="table">
@@ -574,7 +596,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="sgenderAdd" class="form-label">性别</label>
-                        <input type="text" class="form-control" id="sgenderAdd" name="sgender" required>
+                        <select class="form-select" id="sgenderAdd" name="sgender" required>
+                            <option value="" disabled selected>请选择性别</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="sageAdd" class="form-label">年龄</label>
@@ -745,7 +771,10 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">性别</label>
-                        <input type="text" class="form-control" name="sgender" readonly>
+                        <select class="form-select" name="sgender">
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">年龄</label>
@@ -1055,6 +1084,42 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
                 <button type="button" class="btn btn-primary" onclick="updateGrade()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 课程成绩查询结果模态框 -->
+<div class="modal fade" id="searchResultModal" tabindex="-1" aria-labelledby="searchResultModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchResultModalLabel">课程成绩查询结果</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="search-criteria mb-3">
+                    <p><strong>课程名称：</strong><span id="resultCourseName"></span></p>
+                    <p><strong>最低分数：</strong><span id="resultMinGrade"></span></p>
+                    <p class="text-info"><i class="bi bi-info-circle"></i> 显示所有选修该课程且成绩大于等于指定分数的学生记录</p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>学号</th>
+                                <th>学生姓名</th>
+                                <th>课程名称</th>
+                                <th>课程号</th>
+                                <th>成绩</th>
+                            </tr>
+                        </thead>
+                        <tbody id="searchResultTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
             </div>
         </div>
     </div>
@@ -2146,6 +2211,58 @@
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error('更新成绩失败:', jqXHR.responseJSON || errorThrown);
                 alert('更新成绩失败：' + (jqXHR.responseJSON ? jqXHR.responseJSON.message : errorThrown));
+            }
+        });
+    }
+
+    // 搜索课程和分数
+    function searchByCourseAndGrade() {
+        const courseName = $('#searchCourseName').val();
+        const minGrade = $('#searchMinGrade').val();
+        
+        if (!courseName || courseName.trim() === '') {
+            alert('请输入课程名称');
+            return;
+        }
+        
+        if (!minGrade || minGrade.trim() === '') {
+            alert('请输入最低分数');
+            return;
+        }
+        
+        $.ajax({
+            url: `${API_BASE_URL}/sc/search`,
+            type: 'GET',
+            data: {
+                courseName: courseName,
+                minGrade: minGrade
+            },
+            success: function(response) {
+                $('#searchResultTableBody').empty();
+                $('#resultCourseName').text(courseName);
+                $('#resultMinGrade').text(minGrade);
+                
+                if (response.length === 0) {
+                    $('#searchResultTableBody').append('<tr><td colspan="5" class="text-center">未找到符合条件的记录</td></tr>');
+                } else {
+                    response.forEach(result => {
+                        $('#searchResultTableBody').append(`
+                            <tr>
+                                <td>${result.sno}</td>
+                                <td>${result.sname}</td>
+                                <td>${result.cname}</td>
+                                <td>${result.cno}</td>
+                                <td>${result.grade}</td>
+                            </tr>
+                        `);
+                    });
+                }
+                
+                new bootstrap.Modal(document.getElementById('searchResultModal')).show();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('搜索课程和分数失败:', textStatus, errorThrown);
+                alert('搜索课程和分数失败，请检查后端服务是否正常运行');
             }
         });
     }
